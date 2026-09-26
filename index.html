@@ -14,7 +14,7 @@
 
 body{
     margin:0;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
     background:#f7f7f7;
     color:#222;
 }
@@ -299,8 +299,9 @@ input:focus{
 
 .spy-name{
     color:#e00000;
-    font-size:34px;
+    font-size:38px;
     font-weight:900;
+    margin:20px 0;
 }
 
 .correct{
@@ -397,7 +398,7 @@ input:focus{
 
 <body>
 
-<!-- صفحة اللاعبين -->
+<!-- صفحة اختيار أسماء اللاعبين -->
 <section id="playersScreen" class="screen active">
 
     <div class="top">
@@ -516,7 +517,7 @@ input:focus{
 </section>
 
 
-<!-- صفحة تسليم الجوال -->
+<!-- تسليم الجوال -->
 <section id="passScreen" class="screen">
 
     <div class="top">
@@ -544,7 +545,7 @@ input:focus{
 </section>
 
 
-<!-- صفحة كشف الدور -->
+<!-- كشف الدور -->
 <section id="roleScreen" class="screen">
 
     <div class="top">
@@ -566,7 +567,7 @@ input:focus{
 </section>
 
 
-<!-- صفحة الأسئلة -->
+<!-- الأسئلة -->
 <section id="questionsScreen" class="screen">
 
     <div class="top">
@@ -580,7 +581,7 @@ input:focus{
         <h2>وقت اللعب</h2>
 
         <p>
-            الحين اسألوا بعض أسئلة عن السالفة
+            اسألوا بعض أسئلة عن السالفة
             وحاولوا تعرفون من برا السالفة.
         </p>
 
@@ -623,7 +624,7 @@ input:focus{
 </section>
 
 
-<!-- صفحة التصويت -->
+<!-- التصويت -->
 <section id="votingScreen" class="screen">
 
     <div class="top">
@@ -656,11 +657,11 @@ input:focus{
 
     <div class="reveal-card">
 
-        <div style="font-size:60px;">🗳️</div>
+        <div style="font-size:65px;">🕵️</div>
 
-        <h1>نتيجة التصويت</h1>
+        <h1>الجاسوس هو</h1>
 
-        <div id="accusedResult"></div>
+        <div id="spyResult" class="spy-name"></div>
 
         <button class="main-btn" onclick="startSpyGuess()">
             التالي
@@ -671,7 +672,7 @@ input:focus{
 </section>
 
 
-<!-- تخمين الجاسوس -->
+<!-- تخمين الحيوان -->
 <section id="guessScreen" class="screen">
 
     <div class="top">
@@ -695,7 +696,7 @@ input:focus{
 </section>
 
 
-<!-- النتيجة النهائية -->
+<!-- النتائج -->
 <section id="scoresScreen" class="screen">
 
     <div class="top">
@@ -715,7 +716,7 @@ input:focus{
 </section>
 
 
-<!-- نافذة البيت -->
+<!-- نافذة الخروج -->
 <div id="homeModal" class="modal">
 
     <div class="modal-box">
@@ -758,28 +759,27 @@ let votes = {};
 let selectedVotes = {};
 
 
-// الحيوانات
 const animals = [
-    {name:"كلب", emoji:"🐶"},
-    {name:"قطة", emoji:"🐱"},
-    {name:"أسد", emoji:"🦁"},
-    {name:"نمر", emoji:"🐯"},
-    {name:"فيل", emoji:"🐘"},
-    {name:"زرافة", emoji:"🦒"},
-    {name:"قرد", emoji:"🐒"},
-    {name:"دب", emoji:"🐻"},
-    {name:"حصان", emoji:"🐴"},
-    {name:"بقرة", emoji:"🐮"},
-    {name:"خروف", emoji:"🐑"},
-    {name:"أرنب", emoji:"🐰"},
-    {name:"دجاجة", emoji:"🐔"},
-    {name:"بطريق", emoji:"🐧"},
-    {name:"دلفين", emoji:"🐬"},
-    {name:"سمكة", emoji:"🐟"},
-    {name:"تمساح", emoji:"🐊"},
-    {name:"ثعلب", emoji:"🦊"},
-    {name:"ذئب", emoji:"🐺"},
-    {name:"باندا", emoji:"🐼"}
+    {name:"كلب",emoji:"🐶"},
+    {name:"قطة",emoji:"🐱"},
+    {name:"أسد",emoji:"🦁"},
+    {name:"نمر",emoji:"🐯"},
+    {name:"فيل",emoji:"🐘"},
+    {name:"زرافة",emoji:"🦒"},
+    {name:"قرد",emoji:"🐒"},
+    {name:"دب",emoji:"🐻"},
+    {name:"حصان",emoji:"🐴"},
+    {name:"بقرة",emoji:"🐮"},
+    {name:"خروف",emoji:"🐑"},
+    {name:"أرنب",emoji:"🐰"},
+    {name:"دجاجة",emoji:"🐔"},
+    {name:"بطريق",emoji:"🐧"},
+    {name:"دلفين",emoji:"🐬"},
+    {name:"سمكة",emoji:"🐟"},
+    {name:"تمساح",emoji:"🐊"},
+    {name:"ثعلب",emoji:"🦊"},
+    {name:"ذئب",emoji:"🐺"},
+    {name:"باندا",emoji:"🐼"}
 ];
 
 
@@ -795,11 +795,13 @@ function showScreen(id){
 }
 
 
-// إضافة لاعب
 function addPlayer(){
 
-    const input = document.getElementById("playerInput");
-    const name = input.value.trim();
+    const input =
+        document.getElementById("playerInput");
+
+    const name =
+        input.value.trim();
 
     if(!name){
         alert("اكتب اسم اللاعب أول");
@@ -817,7 +819,9 @@ function addPlayer(){
     }
 
     players.push(name);
-    scores[name] = scores[name] || 0;
+
+    scores[name] =
+        scores[name] || 0;
 
     input.value = "";
 
@@ -825,22 +829,32 @@ function addPlayer(){
 }
 
 
-// عرض اللاعبين
 function renderPlayers(){
 
-    const list = document.getElementById("playersList");
+    const list =
+        document.getElementById("playersList");
 
     list.innerHTML = "";
 
     players.forEach((player,index)=>{
 
-        const item = document.createElement("div");
+        const item =
+            document.createElement("div");
 
-        item.className = "player-item";
+        item.className =
+            "player-item";
 
         item.innerHTML = `
-            <span>${index + 1}. ${escapeHTML(player)}</span>
-            <button class="remove-player" onclick="removePlayer(${index})">×</button>
+            <span>
+                ${index + 1}. ${escapeHTML(player)}
+            </span>
+
+            <button
+                class="remove-player"
+                onclick="removePlayer(${index})"
+            >
+                ×
+            </button>
         `;
 
         list.appendChild(item);
@@ -848,10 +862,10 @@ function renderPlayers(){
 }
 
 
-// حذف لاعب
 function removePlayer(index){
 
-    const name = players[index];
+    const name =
+        players[index];
 
     delete scores[name];
 
@@ -861,7 +875,6 @@ function removePlayer(index){
 }
 
 
-// صفحة اختيار اللعبة
 function goToCategories(){
 
     if(players.length < 3){
@@ -875,23 +888,28 @@ function goToCategories(){
 }
 
 
-// اختيار حيوان جديد
 function chooseAnimal(){
 
-    let available = animals.filter(
-        animal => animal.name !== previousAnimal
-    );
+    let available =
+        animals.filter(
+            animal => animal.name !== previousAnimal
+        );
 
     const chosen =
-        available[Math.floor(Math.random()*available.length)];
+        available[
+            Math.floor(
+                Math.random()*available.length
+            )
+        ];
 
-    currentAnimal = chosen.name;
+    currentAnimal =
+        chosen.name;
 
-    previousAnimal = currentAnimal;
+    previousAnimal =
+        currentAnimal;
 }
 
 
-// بدء الجولة
 function startRound(){
 
     if(players.length < 3){
@@ -903,7 +921,10 @@ function startRound(){
 
     chooseAnimal();
 
-    spyIndex = Math.floor(Math.random()*players.length);
+    spyIndex =
+        Math.floor(
+            Math.random()*players.length
+        );
 
     currentPlayerIndex = 0;
 
@@ -918,26 +939,28 @@ function startRound(){
 }
 
 
-// شاشة تسليم الجوال
 function showPassScreen(){
 
-    document.getElementById("passPlayer").textContent =
+    document.getElementById("passPlayer")
+        .textContent =
         players[currentPlayerIndex];
 
     showScreen("passScreen");
 }
 
 
-// إظهار الدور
 function showRole(){
 
-    const player = players[currentPlayerIndex];
+    const player =
+        players[currentPlayerIndex];
 
-    document.getElementById("roleName").textContent =
+    document.getElementById("roleName")
+        .textContent =
         player;
 
     const content =
         document.getElementById("roleContent");
+
 
     if(currentPlayerIndex === spyIndex){
 
@@ -958,7 +981,9 @@ function showRole(){
     }else{
 
         const animal =
-            animals.find(a => a.name === currentAnimal);
+            animals.find(
+                a => a.name === currentAnimal
+            );
 
         content.innerHTML = `
             <div class="role-text">
@@ -979,7 +1004,6 @@ function showRole(){
 }
 
 
-// اللاعب التالي
 function nextRole(){
 
     currentPlayerIndex++;
@@ -996,7 +1020,6 @@ function nextRole(){
 }
 
 
-// الانتقال للاختيارات
 function showChoices(){
 
     showScreen("choiceScreen");
@@ -1004,7 +1027,6 @@ function showChoices(){
 }
 
 
-// الرجوع للأسئلة
 function backToQuestions(){
 
     showScreen("questionsScreen");
@@ -1012,7 +1034,6 @@ function backToQuestions(){
 }
 
 
-// بدء التصويت
 function startVoting(){
 
     selectedVotes = {};
@@ -1024,7 +1045,6 @@ function startVoting(){
 }
 
 
-// رسم التصويت
 function renderVoting(){
 
     const container =
@@ -1032,14 +1052,17 @@ function renderVoting(){
 
     container.innerHTML = "";
 
+
     players.forEach(player=>{
 
         const box =
             document.createElement("div");
 
-        box.className = "vote-player";
+        box.className =
+            "vote-player";
 
         let options = "";
+
 
         players.forEach(target=>{
 
@@ -1053,42 +1076,49 @@ function renderVoting(){
             options += `
                 <button
                     class="vote-option ${selected}"
-                    onclick="selectVote('${escapeAttribute(player)}','${escapeAttribute(target)}')"
+                    onclick="selectVote(
+                        '${escapeAttribute(player)}',
+                        '${escapeAttribute(target)}'
+                    )"
                 >
                     ${escapeHTML(target)}
                 </button>
             `;
         });
 
+
         box.innerHTML = `
-            <h3>${escapeHTML(player)} يصوت لـ:</h3>
+            <h3>
+                ${escapeHTML(player)} يصوت لـ:
+            </h3>
 
             <div class="vote-options">
                 ${options}
             </div>
         `;
 
+
         container.appendChild(box);
 
     });
-
 }
 
 
-// اختيار التصويت
 function selectVote(voter,target){
 
-    selectedVotes[voter] = target;
+    selectedVotes[voter] =
+        target;
 
     renderVoting();
-
 }
 
 
-// إنهاء التصويت
 function finishVoting(){
 
-    if(Object.keys(selectedVotes).length !== players.length){
+    if(
+        Object.keys(selectedVotes).length
+        !== players.length
+    ){
 
         alert("لازم كل لاعب يصوت");
 
@@ -1096,75 +1126,31 @@ function finishVoting(){
     }
 
 
-    const count = {};
+    /*
+      التصويت يتم تسجيله للنقاط،
+      لكن نتيجة الشاشة لا تعرض
+      أكثر شخص حصل على أصوات.
 
-    players.forEach(player=>{
-        count[player] = 0;
-    });
+      النتيجة تعرض الجاسوس الحقيقي فقط.
+    */
 
-
-    Object.values(selectedVotes).forEach(target=>{
-        count[target]++;
-    });
-
-
-    let maxVotes = Math.max(...Object.values(count));
-
-    let candidates =
-        players.filter(
-            player => count[player] === maxVotes
-        );
+    votes =
+        selectedVotes;
 
 
-    const accused =
-        candidates[Math.floor(Math.random()*candidates.length)];
+    const actualSpy =
+        players[spyIndex];
 
 
-    let actualSpy = players[spyIndex];
+    document.getElementById("spyResult")
+        .textContent =
+        actualSpy;
 
-
-    if(accused === actualSpy){
-
-        document.getElementById("accusedResult").innerHTML = `
-            <h2>تم كشف الجاسوس!</h2>
-
-            <div class="spy-name">
-                ${escapeHTML(actualSpy)}
-            </div>
-
-            <p>
-                أغلب التصويت كان على الجاسوس.
-            </p>
-        `;
-
-    }else{
-
-        document.getElementById("accusedResult").innerHTML = `
-            <h2>التصويت كان على:</h2>
-
-            <div style="font-size:32px;font-weight:900;">
-                ${escapeHTML(accused)}
-            </div>
-
-            <p>
-                لكن الجاسوس الحقيقي هو:
-            </p>
-
-            <div class="spy-name">
-                ${escapeHTML(actualSpy)}
-            </div>
-        `;
-    }
-
-
-    votes = selectedVotes;
 
     showScreen("voteResultScreen");
-
 }
 
 
-// بدء تخمين الجاسوس
 function startSpyGuess(){
 
     const container =
@@ -1173,13 +1159,20 @@ function startSpyGuess(){
     container.innerHTML = "";
 
 
-    let options = [currentAnimal];
+    let options = [
+        currentAnimal
+    ];
 
 
     while(options.length < 4){
 
         const randomAnimal =
-            animals[Math.floor(Math.random()*animals.length)].name;
+            animals[
+                Math.floor(
+                    Math.random()*animals.length
+                )
+            ].name;
+
 
         if(!options.includes(randomAnimal)){
 
@@ -1189,18 +1182,26 @@ function startSpyGuess(){
     }
 
 
-    options.sort(()=>Math.random()-.5);
+    options.sort(
+        ()=>Math.random()-.5
+    );
 
 
     options.forEach(animalName=>{
 
         const animal =
-            animals.find(a=>a.name === animalName);
+            animals.find(
+                a => a.name === animalName
+            );
+
 
         const button =
             document.createElement("button");
 
-        button.className = "animal-option";
+
+        button.className =
+            "animal-option";
+
 
         button.innerHTML = `
             ${animal.emoji}
@@ -1208,11 +1209,17 @@ function startSpyGuess(){
             ${animal.name}
         `;
 
-        button.onclick = function(){
 
-            guessAnimal(button,animalName);
+        button.onclick =
+            function(){
 
-        };
+                guessAnimal(
+                    button,
+                    animalName
+                );
+
+            };
+
 
         container.appendChild(button);
 
@@ -1220,15 +1227,16 @@ function startSpyGuess(){
 
 
     showScreen("guessScreen");
-
 }
 
 
-// تخمين الحيوان
 function guessAnimal(button,guess){
 
     const buttons =
-        document.querySelectorAll(".animal-option");
+        document.querySelectorAll(
+            ".animal-option"
+        );
+
 
     buttons.forEach(btn=>{
         btn.disabled = true;
@@ -1236,7 +1244,9 @@ function guessAnimal(button,guess){
 
 
     const actualAnimal =
-        animals.find(a=>a.name === currentAnimal);
+        animals.find(
+            a => a.name === currentAnimal
+        );
 
 
     if(guess === currentAnimal){
@@ -1244,15 +1254,20 @@ function guessAnimal(button,guess){
         button.classList.add("correct");
 
         button.innerHTML += `
-            <br>صح عليك! ✅
+            <br>
+            صح عليك! ✅
         `;
 
 
-        // الجاسوس يأخذ 200 إذا عرف الحيوان
-        scores[players[spyIndex]] += 200;
+        // الجاسوس يأخذ 200 نقطة
+        scores[
+            players[spyIndex]
+        ] += 200;
 
 
-        alert("صح عليك! الجاسوس عرف الحيوان 🕵️");
+        alert(
+            "صح عليك! الجاسوس عرف الحيوان 🕵️"
+        );
 
 
     }else{
@@ -1262,7 +1277,12 @@ function guessAnimal(button,guess){
 
         buttons.forEach(btn=>{
 
-            if(btn.textContent.includes(actualAnimal.name)){
+            if(
+                btn.textContent
+                    .includes(
+                        actualAnimal.name
+                    )
+            ){
 
                 btn.classList.add("correct");
 
@@ -1275,14 +1295,20 @@ function guessAnimal(button,guess){
             "خطأ ❌\nالحيوان الصحيح هو: "
             + actualAnimal.name
         );
-
     }
 
 
-    // كل شخص صوت على الجاسوس يأخذ 100
+    /*
+      أي لاعب صوت على الجاسوس
+      يحصل على 100 نقطة.
+    */
+
     players.forEach(player=>{
 
-        if(selectedVotes[player] === players[spyIndex]){
+        if(
+            selectedVotes[player]
+            === players[spyIndex]
+        ){
 
             scores[player] += 100;
 
@@ -1296,11 +1322,9 @@ function guessAnimal(button,guess){
         showScores();
 
     },700);
-
 }
 
 
-// عرض النقاط
 function showScores(){
 
     const container =
@@ -1311,7 +1335,8 @@ function showScores(){
 
     const sorted =
         [...players].sort(
-            (a,b)=>scores[b]-scores[a]
+            (a,b)=>
+                scores[b] - scores[a]
         );
 
 
@@ -1320,7 +1345,9 @@ function showScores(){
         const item =
             document.createElement("div");
 
-        item.className = "score-item";
+        item.className =
+            "score-item";
+
 
         item.innerHTML = `
             <span>
@@ -1332,17 +1359,16 @@ function showScores(){
             </span>
         `;
 
+
         container.appendChild(item);
 
     });
 
 
     showScreen("scoresScreen");
-
 }
 
 
-// جولة جديدة
 function newRound(){
 
     startRound();
@@ -1350,7 +1376,6 @@ function newRound(){
 }
 
 
-// فتح نافذة البيت
 function openHomeModal(){
 
     document
@@ -1360,7 +1385,6 @@ function openHomeModal(){
 }
 
 
-// إغلاق نافذة البيت
 function closeHomeModal(){
 
     document
@@ -1370,14 +1394,10 @@ function closeHomeModal(){
 }
 
 
-// تأكيد الرجوع للصفحة الأولى
 function confirmHome(){
 
-    // إغلاق النافذة
     closeHomeModal();
 
-
-    // تصفير الجولة الحالية
     currentPlayerIndex = 0;
     spyIndex = -1;
 
@@ -1387,21 +1407,12 @@ function confirmHome(){
     votes = {};
     selectedVotes = {};
 
-
-    /*
-       الأهم هنا:
-       نرجع مباشرة لصفحة أسماء اللاعبين
-       وليس صفحة اللعبة الحالية.
-    */
-
     showScreen("playersScreen");
 
     renderPlayers();
-
 }
 
 
-// حماية النصوص
 function escapeHTML(text){
 
     return String(text)
@@ -1410,7 +1421,6 @@ function escapeHTML(text){
         .replace(/>/g,"&gt;")
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#039;");
-
 }
 
 
@@ -1419,22 +1429,23 @@ function escapeAttribute(text){
     return String(text)
         .replace(/\\/g,"\\\\")
         .replace(/'/g,"\\'");
-
 }
 
 
-// السماح بالضغط Enter لإضافة لاعب
 document
     .getElementById("playerInput")
-    .addEventListener("keydown",function(e){
+    .addEventListener(
+        "keydown",
+        function(e){
 
-        if(e.key === "Enter"){
+            if(e.key === "Enter"){
 
-            addPlayer();
+                addPlayer();
+
+            }
 
         }
-
-    });
+    );
 
 </script>
 
