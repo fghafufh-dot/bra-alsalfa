@@ -2,335 +2,972 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>برا السالفة</title>
+
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;min-height:100%;font-family:Tahoma,Arial,sans-serif;background:#8098d0;color:#fff}
-body{overflow-x:hidden}
-button{font:inherit;border:0;cursor:pointer}
-.screen{min-height:100vh;display:none;position:relative;padding:24px 18px 90px}
-.screen.active{display:block}
-.top-title{text-align:center;font-size:38px;font-weight:900;margin:12px 0 8px;text-shadow:0 3px 0 #536ba7}
-.subtitle{text-align:center;font-size:20px;margin:0 auto 25px;line-height:1.7}
-.credit{position:fixed;bottom:14px;left:0;right:0;text-align:center;font-size:17px;font-weight:700;z-index:5}
-.home-btn{position:absolute;top:18px;right:18px;width:58px;height:58px;border-radius:50%;background:#b30d4f;color:#fff;font-size:30px;box-shadow:0 6px 0 #7e0838;z-index:10}
-.home-btn:active,.main-btn:active,.book:active{transform:translateY(3px);box-shadow:none}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
-/* intro */
-#intro{align-items:center;justify-content:center;text-align:center}
-#intro.active{display:flex}
-.intro-title{font-size:52px;font-weight:900;margin:0 0 18px}
-.intro-card{width:min(92vw,620px);background:rgba(255,255,255,.10);border-radius:32px;padding:42px 25px 38px;box-shadow:0 15px 35px rgba(40,50,90,.18)}
-.intro-card p{font-size:23px;line-height:1.8;margin:0 0 35px}
-.main-btn{background:#ffa516;color:white;padding:16px 48px;border-radius:22px;font-size:25px;font-weight:900;box-shadow:0 7px 0 #c77b09;min-width:190px}
+body{
+  margin:0;
+  font-family:Tahoma,Arial,sans-serif;
+  background:#8098d0;
+  color:#111;
+  min-height:100vh;
+}
 
-/* library */
-.books{width:min(100%,1000px);margin:20px auto 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 30px}
-.book-wrap{text-align:center}
-.book{position:relative;width:100%;aspect-ratio:3/4.2;border-radius:8px 16px 14px 8px;overflow:hidden;background:linear-gradient(135deg,#20243a,#454d75);box-shadow:8px 9px 0 rgba(74,54,102,.35),0 12px 18px rgba(45,52,92,.28);padding:0;color:#fff;transition:.12s}
-.book:before{content:"";position:absolute;right:0;top:0;bottom:0;width:11px;background:rgba(0,0,0,.18)}
-.book .cover-top{position:absolute;top:0;left:0;right:11px;height:14%;background:rgba(255,255,255,.13);border-radius:0 0 18px 18px}
-.book .icon{font-size:clamp(42px,9vw,78px);position:absolute;top:22%;left:0;right:0}
-.book .name{position:absolute;bottom:22%;left:8px;right:18px;font-size:clamp(24px,5vw,42px);font-weight:900;text-shadow:0 3px 0 rgba(0,0,0,.2)}
-.book .small{position:absolute;bottom:8%;left:0;right:10px;font-size:14px;opacity:.9}
-.b1{background:linear-gradient(145deg,#25253b,#111522)}
-.b2{background:linear-gradient(145deg,#246a78,#163f4b)}
-.b3{background:linear-gradient(145deg,#7e3458,#48203e)}
-.b4{background:linear-gradient(145deg,#e07a13,#8c330d)}
-.b5{background:linear-gradient(145deg,#294c86,#17294e)}
-.b6{background:linear-gradient(145deg,#15152d,#522050)}
-.b7{background:linear-gradient(145deg,#c76f18,#723d13)}
-.b8{background:linear-gradient(145deg,#6b3d77,#321d48)}
-.b9{background:linear-gradient(145deg,#237b69,#123d35)}
-.b10{background:linear-gradient(145deg,#a98a37,#66521c)}
-.b11{background:linear-gradient(145deg,#77a43b,#3e6222)}
-.b12{background:linear-gradient(145deg,#315d9c,#1a3158)}
+button{
+  font:inherit;
+  border:0;
+  cursor:pointer;
+}
 
-/* players */
-.panel{width:min(92vw,650px);margin:35px auto 0;background:rgba(255,255,255,.11);border-radius:28px;padding:25px;box-shadow:0 12px 30px rgba(45,52,92,.18)}
-.input-row{display:flex;gap:10px;margin-bottom:18px}
-input{flex:1;border:0;border-radius:15px;padding:15px;font-size:20px;outline:none;background:#fff;color:#222}
-.add-btn{background:#ff9f0f;color:#fff;border-radius:15px;padding:0 22px;font-size:25px;font-weight:bold}
-.player-list{display:grid;gap:10px;margin:15px 0}
-.player{display:flex;align-items:center;justify-content:space-between;background:#fff;color:#333;border-radius:14px;padding:12px 15px;font-size:19px}
-.remove{background:#b30d4f;color:#fff;border-radius:10px;padding:5px 11px}
-.center{text-align:center}
-.count{font-size:18px;margin:12px 0 20px}
+.screen{
+  display:none;
+  min-height:100vh;
+  padding:25px 18px 100px;
+}
 
-/* categories */
-.category-grid{width:min(95vw,900px);margin:25px auto;display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
-.cat{padding:22px 10px;border-radius:20px;background:#b30d4f;color:#fff;font-weight:900;font-size:22px;box-shadow:0 6px 0 #7e0838}
-.cat.selected{background:#ffa516;box-shadow:0 6px 0 #c77b09}
+.screen.active{
+  display:block;
+}
 
-/* round */
-.role-card{width:min(92vw,650px);margin:55px auto 25px;background:#ffa516;color:#222;border-radius:28px;padding:38px 22px;text-align:center;box-shadow:0 8px 0 #c77b09}
-.role-card h2{font-size:31px;margin:0 0 18px}
-.role-card .question{font-size:27px;line-height:1.7;font-weight:800}
-.answer-box{background:#fff;border-radius:18px;padding:20px;margin-top:22px;font-size:22px;color:#333}
-.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.secondary{background:#b30d4f;box-shadow:0 6px 0 #7e0838}
-.hidden{display:none!important}
+.title{
+  text-align:center;
+  font-size:38px;
+  font-weight:900;
+  margin:25px 0 10px;
+}
 
-/* exit modal */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.68);display:none;align-items:center;justify-content:center;padding:20px;z-index:100}
-.overlay.show{display:flex}
-.modal{width:min(92vw,570px);background:#ffa516;color:#111;border-radius:30px;padding:32px 22px;text-align:center;box-shadow:0 12px 0 #9e6508}
-.modal h2{font-size:28px;line-height:1.6;margin:0 0 25px}
-.modal-actions{display:flex;gap:15px;justify-content:center}
-.yes{background:#b30d4f;color:#fff;box-shadow:0 5px 0 #7e0838}
-.no{background:#fff;color:#e79a00;box-shadow:0 5px 0 #aaa}
+.subtitle{
+  text-align:center;
+  font-size:20px;
+  line-height:1.8;
+}
 
-@media(max-width:520px){
- .screen{padding-left:12px;padding-right:12px}
- .top-title{font-size:31px}
- .books{gap:18px 14px}
- .book .name{font-size:24px}
- .intro-title{font-size:43px}
- .intro-card p{font-size:19px}
- .category-grid{gap:10px}
- .cat{font-size:18px;padding:18px 5px}
+.card{
+  max-width:520px;
+  margin:30px auto;
+  background:#fff;
+  border-radius:25px;
+  padding:25px;
+  box-shadow:0 8px 0 rgba(0,0,0,.15);
+}
+
+.big-btn{
+  width:100%;
+  background:#111;
+  color:#fff;
+  padding:18px;
+  border-radius:18px;
+  font-size:22px;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+.green{
+  background:#24a148;
+}
+
+.red{
+  background:#d92727;
+}
+
+.blue{
+  background:#4267d5;
+}
+
+.player-input{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.player-input input{
+  flex:1;
+  padding:15px;
+  border:2px solid #ddd;
+  border-radius:14px;
+  font-size:18px;
+}
+
+.player{
+  background:#eee;
+  padding:14px;
+  border-radius:14px;
+  margin-top:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:19px;
+}
+
+.remove{
+  background:#d92727;
+  color:#fff;
+  border-radius:10px;
+  padding:6px 12px;
+}
+
+.center{
+  text-align:center;
+}
+
+.player-name{
+  font-size:34px;
+  font-weight:900;
+  margin:20px 0;
+}
+
+.animal{
+  font-size:42px;
+  font-weight:900;
+  margin:20px 0;
+}
+
+.secret{
+  background:#f4f4f4;
+  border-radius:20px;
+  padding:25px;
+  text-align:center;
+}
+
+.option{
+  width:100%;
+  padding:17px;
+  background:#eee;
+  border-radius:15px;
+  margin:10px 0;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.option.correct{
+  background:#24a148;
+  color:white;
+}
+
+.option.wrong{
+  background:#d92727;
+  color:white;
+}
+
+.vote-row{
+  margin:15px 0;
+  padding:15px;
+  background:#f2f2f2;
+  border-radius:16px;
+}
+
+.vote-row h3{
+  margin:0 0 10px;
+}
+
+.vote-buttons{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+
+.vote-btn{
+  padding:12px;
+  border-radius:12px;
+  background:#ddd;
+  font-weight:bold;
+}
+
+.vote-btn.selected{
+  background:#4267d5;
+  color:white;
+}
+
+.score-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#fff;
+  padding:17px;
+  border-radius:17px;
+  margin:10px 0;
+  font-size:21px;
+  font-weight:bold;
+}
+
+.points{
+  background:#111;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:12px;
+}
+
+.home{
+  position:fixed;
+  top:15px;
+  right:15px;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:#fff;
+  font-size:25px;
+  z-index:10;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:50;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  background:#fff;
+  border-radius:25px;
+  padding:25px;
+  max-width:430px;
+  width:100%;
+  text-align:center;
+}
+
+.modal-box h2{
+  margin-top:0;
+}
+
+.credit{
+  text-align:center;
+  margin-top:30px;
+  font-size:16px;
 }
 </style>
 </head>
+
 <body>
 
-<section id="intro" class="screen active">
-  <div class="intro-card">
-    <h1 class="intro-title">برا السالفة</h1>
-    <p>لعبة جماعية خفيفة وممتعة<br>اختر لعبة وابدأ التحدي مع أصحابك!</p>
-    <button class="main-btn" onclick="show('library')">ابدأ</button>
+<!-- الصفحة الرئيسية -->
+<section id="homeScreen" class="screen active">
+  <div class="title">برا السالفة</div>
+
+  <div class="card center">
+    <h2>لعبة الجاسوس 🕵️</h2>
+    <p class="subtitle">
+      لاعب واحد برا السالفة، والباقي يعرفون الحيوان.
+    </p>
+
+    <button class="big-btn" onclick="showPlayers()">
+      ابدأ اللعبة
+    </button>
   </div>
+
   <div class="credit">تصميم عادل</div>
 </section>
 
-<section id="library" class="screen">
-  <button class="home-btn" onclick="openExit()">⌂</button>
-  <h1 class="top-title">قائمة الألعاب</h1>
-  <p class="subtitle">اختر الكتاب اللي تبي تلعبه</p>
-  <div class="books" id="books"></div>
-  <div class="credit">تصميم عادل</div>
-</section>
 
-<section id="players" class="screen">
-  <button class="home-btn" onclick="openExit()">⌂</button>
-  <h1 class="top-title">برا السالفة</h1>
-  <p class="subtitle">أضف على الأقل 3 لاعبين ثم اضغط التالي</p>
-  <div class="panel">
-    <div class="input-row">
-      <input id="playerInput" placeholder="اكتب اسم اللاعب" maxlength="20">
-      <button class="add-btn" onclick="addPlayer()">+</button>
+<!-- اللاعبين -->
+<section id="playersScreen" class="screen">
+
+  <button class="home" onclick="showHomeConfirm()">⌂</button>
+
+  <div class="title">اللاعبين</div>
+
+  <div class="card">
+
+    <p class="subtitle">
+      أضف على الأقل 3 لاعبين
+    </p>
+
+    <div class="player-input">
+      <input id="playerName" type="text" placeholder="اسم اللاعب">
+      <button class="big-btn" style="margin:0;width:auto" onclick="addPlayer()">إضافة</button>
     </div>
-    <div id="playerList" class="player-list"></div>
-    <div id="count" class="count">عدد اللاعبين: 0</div>
-    <div class="center"><button class="main-btn" onclick="toCategories()">التالي</button></div>
+
+    <div id="playersList"></div>
+
+    <button class="big-btn green" onclick="startRound()">
+      التالي
+    </button>
+
   </div>
 </section>
 
-<section id="categories" class="screen">
-  <button class="home-btn" onclick="openExit()">⌂</button>
-  <h1 class="top-title">اختر الفئة</h1>
-  <p class="subtitle">اختاروا موضوع الجولة</p>
-  <div class="category-grid" id="categoryGrid"></div>
-  <div class="center"><button class="main-btn" onclick="startRound()">ابدأ الجولة</button></div>
+
+<!-- توزيع الأدوار -->
+<section id="roleScreen" class="screen">
+
+  <button class="home" onclick="showHomeConfirm()">⌂</button>
+
+  <div class="title">برا السالفة</div>
+
+  <div class="card center">
+
+    <div id="rolePlayer" class="player-name"></div>
+
+    <p class="subtitle">
+      اعطوا الجوال لهذا اللاعب<br>
+      واضغط تم حتى يعرف دوره
+    </p>
+
+    <button id="roleButton" class="big-btn" onclick="showRole()">
+      تم
+    </button>
+
+    <div id="roleResult"></div>
+
+  </div>
 </section>
 
-<section id="round" class="screen">
-  <button class="home-btn" onclick="openExit()">⌂</button>
-  <h1 class="top-title">الجولة</h1>
-  <div class="role-card">
-    <h2 id="roundPlayer"></h2>
-    <div class="question" id="roundQuestion"></div>
-    <div id="answer" class="answer-box hidden"></div>
-  </div>
-  <div class="actions">
-    <button class="main-btn" onclick="showAnswer()">إظهار الإجابة</button>
-    <button class="main-btn secondary" onclick="nextTurn()">التالي</button>
+
+<!-- مرحلة الأسئلة الواقعية -->
+<section id="questionScreen" class="screen">
+
+  <button class="home" onclick="showHomeConfirm()">⌂</button>
+
+  <div class="title">وقت اللعب</div>
+
+  <div class="card center">
+
+    <h2>الحين دوركم 😈</h2>
+
+    <p class="subtitle">
+      اسألوا بعضكم في الحياة الواقعية<br>
+      وحاولوا تعرفون مين برا السالفة.
+    </p>
+
+    <button class="big-btn blue" onclick="openChoice()">
+      انتهينا من الأسئلة
+    </button>
+
   </div>
 </section>
 
-<div id="exitOverlay" class="overlay">
-  <div class="modal">
-    <h2>تبي تطلع برا القيم؟</h2>
-    <div class="modal-actions">
-      <button class="main-btn yes" onclick="goHome()">إيه متأكد</button>
-      <button class="main-btn no" onclick="closeExit()">لا</button>
-    </div>
+
+<!-- سؤال أو تصويت -->
+<section id="choiceScreen" class="screen">
+
+  <button class="home" onclick="showHomeConfirm()">⌂</button>
+
+  <div class="title">وش تسوون؟</div>
+
+  <div class="card center">
+
+    <button class="big-btn blue" onclick="backToQuestions()">
+      سؤال
+    </button>
+
+    <button class="big-btn red" onclick="startVoting()">
+      تصويت
+    </button>
+
   </div>
+</section>
+
+
+<!-- التصويت -->
+<section id="voteScreen" class="screen">
+
+  <button class="home" onclick="showHomeConfirm()">⌂</button>
+
+  <div class="title">التصويت</div>
+
+  <div class="card">
+
+    <p class="subtitle">
+      كل لاعب يختار الشخص الذي يعتقد أنه الجاسوس.
+    </p>
+
+    <div id="voteList"></div>
+
+    <button class="big-btn green" onclick="finishVoting()">
+      تأكيد التصويت
+    </button>
+
+  </div>
+</section>
+
+
+<!-- نتيجة التصويت -->
+<section id="voteResultScreen" class="screen">
+
+  <button class="home" onclick="showHomeConfirm()">⌂</button>
+
+  <div class="title">نتيجة التصويت</div>
+
+  <div class="card center">
+
+    <h2>الجاسوس هو:</h2>
+
+    <div id="spyResult" class="player-name"></div>
+
+    <p id="voteMessage" class="subtitle"></p>
+
+    <button class="big-btn blue" onclick="startSpyGuess()">
+      التالي
+    </button>
+
+  </div>
+</section>
+
+
+<!-- تخمين الحيوان -->
+<section id="guessScreen" class="screen">
+
+  <div class="title">تخمين الحيوان</div>
+
+  <div class="card center">
+
+    <h2 id="guessPlayer"></h2>
+
+    <p class="subtitle">
+      حاول تعرف وش الحيوان 🕵️
+    </p>
+
+    <div id="animalOptions"></div>
+
+    <div id="guessResult"></div>
+
+  </div>
+</section>
+
+
+<!-- النقاط -->
+<section id="scoreScreen" class="screen">
+
+  <div class="title">النقاط</div>
+
+  <div class="card">
+
+    <div id="scoreList"></div>
+
+    <button class="big-btn green" onclick="newRound()">
+      جولة جديدة →
+    </button>
+
+  </div>
+</section>
+
+
+<!-- نافذة الخروج -->
+<div id="homeModal" class="modal">
+
+  <div class="modal-box">
+
+    <h2>متأكد تبغى تطلع برا القيم؟</h2>
+
+    <p>بتطلع من الجولة الحالية.</p>
+
+    <button class="big-btn red" onclick="goHome()">
+      إيه متأكد
+    </button>
+
+    <button class="big-btn" onclick="closeHomeConfirm()">
+      لا هونت
+    </button>
+
+  </div>
+
 </div>
 
+
 <script>
-const games = [
- {name:'برا السالفة',icon:'🕵️',cls:'b1',desc:'لعبة الأسئلة السرية'},
- {name:'مشروبات',icon:'☕',cls:'b2',desc:'أسئلة عن المشروبات'},
- {name:'حلويات',icon:'🍨',cls:'b3',desc:'أسئلة عن الحلويات'},
- {name:'حيوانات',icon:'🐾',cls:'b4',desc:'أسئلة عن الحيوانات'},
- {name:'كورة',icon:'⚽',cls:'b5',desc:'أسئلة رياضية'},
- {name:'سيارات',icon:'🚘',cls:'b6',desc:'أسئلة عن السيارات'},
- {name:'ملابس',icon:'👕',cls:'b7',desc:'أسئلة عن الملابس'},
- {name:'مسلسلات',icon:'📺',cls:'b8',desc:'أسئلة عن المسلسلات'},
- {name:'أفلام',icon:'🎬',cls:'b9',desc:'أسئلة عن الأفلام'},
- {name:'أكل',icon:'🍽️',cls:'b10',desc:'أسئلة عن الأكل'},
- {name:'فواكه وخضار',icon:'🍎',cls:'b11',desc:'أسئلة عن الفواكه والخضار'},
- {name:'ألعاب',icon:'🎮',cls:'b12',desc:'أسئلة عن الألعاب'}
+
+let players = [];
+let scores = {};
+
+let currentPlayerIndex = 0;
+let spyIndex = -1;
+
+let currentAnimal = "";
+let previousAnimal = "";
+
+let votes = {};
+let selectedVotes = {};
+
+let animals = [
+  "كلب 🐕",
+  "قط 🐈",
+  "أسد 🦁",
+  "نمر 🐯",
+  "فيل 🐘",
+  "زرافة 🦒",
+  "قرد 🐒",
+  "دب 🐻",
+  "حصان 🐎",
+  "بقرة 🐄",
+  "خروف 🐑",
+  "أرنب 🐇",
+  "دجاجة 🐔",
+  "بطريق 🐧",
+  "دولفين 🐬",
+  "سمكة 🐟",
+  "تمساح 🐊",
+  "ثعلب 🦊",
+  "ذئب 🐺",
+  "باندا 🐼"
 ];
 
-const categories = games.map(x=>x.name);
-let players=[];
-let selectedCategory='برا السالفة';
-let turn=0;
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s=>{
+    s.classList.remove("active");
+  });
 
-const questions={
- 'برا السالفة':[
-  ['وش أكثر شيء الناس يطلبونه إذا جلسوا مع بعض؟','بيتزا'],
-  ['اذكر شيء غالبًا يكون في شنطة الشخص.','شاحن'],
-  ['وش شيء تستخدمه كل يوم؟','الجوال'],
-  ['اذكر مكان يروح له الناس في الويكند.','مطعم'],
-  ['وش شيء ممكن تنساه وأنت مستعجل؟','المفاتيح']
- ],
- 'مشروبات':[
-  ['وش مشروب تشربه غالبًا الصباح؟','قهوة'],
-  ['اذكر مشروب بارد مشهور بالصيف.','عصير'],
-  ['وش مشروب يقدم غالبًا مع الفطور؟','شاي'],
-  ['اذكر مشروب غازي معروف.','كولا']
- ],
- 'حلويات':[
-  ['اذكر حلى مشهور في المناسبات.','كيكة'],
-  ['وش حلى بارد مشهور؟','آيس كريم'],
-  ['اذكر نوع شوكولاتة.','شوكولاتة بالحليب'],
-  ['وش حلى يؤكل غالبًا مع القهوة؟','معمول']
- ],
- 'حيوانات':[
-  ['اذكر حيوان يعيش في الصحراء.','جمل'],
-  ['وش الحيوان المعروف بالوفاء؟','كلب'],
-  ['اذكر حيوانًا سريعًا.','فهد'],
-  ['وش حيوان يعيش في الماء؟','سمك']
- ],
- 'كورة':[
-  ['اذكر مركزًا في كرة القدم.','حارس مرمى'],
-  ['كم لاعبًا يبدأ به الفريق في الملعب؟','11 لاعبًا'],
-  ['اذكر بطولة كروية مشهورة.','كأس العالم'],
-  ['وش لون البطاقة التي تعني الطرد؟','الحمراء']
- ],
- 'سيارات':[
-  ['اذكر نوع سيارة منتشر في الخليج.','تويوتا'],
-  ['وش الشيء اللي يحرك السيارة؟','المحرك'],
-  ['اذكر لونًا شائعًا للسيارات.','أبيض'],
-  ['وش نستخدمه لمعرفة سرعة السيارة؟','عداد السرعة']
- ],
- 'ملابس':[
-  ['اذكر قطعة ملابس تلبس في الشتاء.','جاكيت'],
-  ['وش تلبس في القدم؟','حذاء'],
-  ['اذكر لونًا شائعًا للملابس.','أسود'],
-  ['وش قطعة تلبس على الرأس؟','قبعة']
- ],
- 'مسلسلات':[
-  ['اذكر نوعًا من أنواع المسلسلات.','كوميدي'],
-  ['وش الجهاز اللي غالبًا نشاهد فيه المسلسلات؟','التلفزيون'],
-  ['اذكر شيئًا تحتاجه لمتابعة مسلسل.','إنترنت'],
-  ['كم حلقة ممكن يكون في الموسم؟','عدة حلقات']
- ],
- 'أفلام':[
-  ['اذكر نوعًا من أنواع الأفلام.','أكشن'],
-  ['وش المكان اللي نشاهد فيه الأفلام على شاشة كبيرة؟','السينما'],
-  ['اذكر شيئًا يؤكل في السينما.','فشار'],
-  ['وش الجهاز اللي يعرض الفيلم؟','الشاشة']
- ],
- 'أكل':[
-  ['اذكر أكلة شعبية.','كبسة'],
-  ['وش أكلة مشهورة بالفطور؟','بيض'],
-  ['اذكر نوعًا من أنواع البيتزا.','بيبروني'],
-  ['وش شيء غالبًا يكون مع البرجر؟','بطاطس']
- ],
- 'فواكه وخضار':[
-  ['اذكر فاكهة لونها أحمر.','تفاح'],
-  ['وش خضار لونه برتقالي؟','جزر'],
-  ['اذكر فاكهة صيفية.','بطيخ'],
-  ['وش خضار يستخدم كثيرًا في السلطة؟','خيار']
- ],
- 'ألعاب':[
-  ['اذكر لعبة جماعية.','كرة القدم'],
-  ['وش جهاز مشهور للألعاب؟','بلايستيشن'],
-  ['اذكر لعبة فيها سيارات.','سباق سيارات'],
-  ['وش تحتاج غالبًا للعب أونلاين؟','إنترنت']
- ]
-};
+  document.getElementById(id).classList.add("active");
 
-function renderBooks(){
- const el=document.getElementById('books');
- el.innerHTML=games.map((g,i)=>`
-  <div class="book-wrap">
-   <button class="book ${g.cls}" onclick="chooseGame('${g.name.replace(/'/g,"\\'")}')">
-    <div class="cover-top"></div>
-    <div class="icon">${g.icon}</div>
-    <div class="name">${g.name}</div>
-    <div class="small">${g.desc}</div>
-   </button>
-  </div>`).join('');
+  window.scrollTo(0,0);
 }
-renderBooks();
 
-function show(id){
- document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- window.scrollTo(0,0);
+function showPlayers(){
+  showScreen("playersScreen");
 }
-function chooseGame(name){
- if(name==='برا السالفة') show('players');
- else {
-   selectedCategory=name;
-   players=[];
-   renderPlayers();
-   show('players');
- }
-}
+
 function addPlayer(){
- const input=document.getElementById('playerInput');
- const name=input.value.trim();
- if(!name)return;
- if(players.length>=30)return;
- players.push(name);
- input.value='';
- renderPlayers();
- input.focus();
+
+  const input = document.getElementById("playerName");
+  const name = input.value.trim();
+
+  if(!name) return;
+
+  if(players.includes(name)){
+    alert("الاسم موجود من قبل");
+    return;
+  }
+
+  players.push(name);
+  scores[name] = scores[name] || 0;
+
+  input.value = "";
+
+  renderPlayers();
 }
-document.getElementById('playerInput').addEventListener('keydown',e=>{if(e.key==='Enter')addPlayer()});
-function removePlayer(i){players.splice(i,1);renderPlayers()}
+
 function renderPlayers(){
- document.getElementById('playerList').innerHTML=players.map((p,i)=>`
-  <div class="player"><span>${i+1}. ${escapeHtml(p)}</span><button class="remove" onclick="removePlayer(${i})">حذف</button></div>`).join('');
- document.getElementById('count').textContent='عدد اللاعبين: '+players.length;
+
+  const list = document.getElementById("playersList");
+
+  list.innerHTML = "";
+
+  players.forEach((name,index)=>{
+
+    const div = document.createElement("div");
+
+    div.className = "player";
+
+    div.innerHTML = `
+      <span>${name}</span>
+      <button class="remove" onclick="removePlayer(${index})">حذف</button>
+    `;
+
+    list.appendChild(div);
+  });
 }
-function toCategories(){
- if(players.length<3){alert('لازم تضيف 3 لاعبين على الأقل');return}
- const grid=document.getElementById('categoryGrid');
- grid.innerHTML=categories.map(c=>`<button class="cat ${c===selectedCategory?'selected':''}" onclick="selectCategory('${c}')">${c}</button>`).join('');
- show('categories');
+
+function removePlayer(index){
+
+  const name = players[index];
+
+  players.splice(index,1);
+
+  delete scores[name];
+
+  renderPlayers();
 }
-function selectCategory(c){
- selectedCategory=c;
- document.querySelectorAll('.cat').forEach(b=>b.classList.toggle('selected',b.textContent===c));
+
+function chooseAnimal(){
+
+  let available = animals.filter(a=>a !== previousAnimal);
+
+  currentAnimal =
+    available[Math.floor(Math.random()*available.length)];
+
+  previousAnimal = currentAnimal;
 }
+
 function startRound(){
- turn=0;
- showTurn();
- show('round');
+
+  if(players.length < 3){
+    alert("لازم تضيف 3 لاعبين على الأقل");
+    return;
+  }
+
+  chooseAnimal();
+
+  spyIndex = Math.floor(Math.random()*players.length);
+
+  currentPlayerIndex = 0;
+
+  votes = {};
+  selectedVotes = {};
+
+  document.getElementById("rolePlayer").textContent =
+    players[currentPlayerIndex];
+
+  document.getElementById("roleResult").innerHTML = "";
+
+  document.getElementById("roleButton").style.display = "block";
+
+  showScreen("roleScreen");
 }
-function showTurn(){
- const p=players[turn%players.length];
- const q=(questions[selectedCategory]||questions['برا السالفة']);
- const item=q[turn%q.length];
- document.getElementById('roundPlayer').textContent='الدور على: '+p;
- document.getElementById('roundQuestion').textContent=item[0];
- document.getElementById('answer').textContent='الإجابة المقترحة: '+item[1];
- document.getElementById('answer').classList.add('hidden');
+
+function showRole(){
+
+  const name = players[currentPlayerIndex];
+
+  const result = document.getElementById("roleResult");
+
+  document.getElementById("roleButton").style.display = "none";
+
+  if(currentPlayerIndex === spyIndex){
+
+    result.innerHTML = `
+      <div class="secret">
+        <h2 style="color:#d92727">أنت برا السالفة 🔴</h2>
+        <p class="subtitle">
+          حاول تعرف وش الحيوان.
+        </p>
+      </div>
+    `;
+
+  }else{
+
+    result.innerHTML = `
+      <div class="secret">
+        <h2 style="color:#24a148">أنت داخل السالفة 🟢</h2>
+        <div class="animal">${currentAnimal}</div>
+      </div>
+    `;
+  }
+
+  const next = document.createElement("button");
+
+  next.className = "big-btn blue";
+
+  next.textContent =
+    currentPlayerIndex === players.length-1
+      ? "ابدأ اللعب"
+      : "التالي";
+
+  next.onclick = ()=>{
+
+    if(currentPlayerIndex === players.length-1){
+
+      showScreen("questionScreen");
+
+    }else{
+
+      currentPlayerIndex++;
+
+      document.getElementById("rolePlayer").textContent =
+        players[currentPlayerIndex];
+
+      document.getElementById("roleResult").innerHTML = "";
+
+      document.getElementById("roleButton").style.display = "block";
+
+      next.remove();
+    }
+
+  };
+
+  result.appendChild(next);
 }
-function showAnswer(){document.getElementById('answer').classList.remove('hidden')}
-function nextTurn(){turn++;showTurn()}
-function openExit(){document.getElementById('exitOverlay').classList.add('show')}
-function closeExit(){document.getElementById('exitOverlay').classList.remove('show')}
-function goHome(){closeExit();players=[];show('library')}
-function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+
+function backToQuestions(){
+  showScreen("questionScreen");
+}
+
+function openChoice(){
+  showScreen("choiceScreen");
+}
+
+function startVoting(){
+
+  selectedVotes = {};
+
+  const list = document.getElementById("voteList");
+
+  list.innerHTML = "";
+
+  players.forEach((voter,index)=>{
+
+    const row = document.createElement("div");
+
+    row.className = "vote-row";
+
+    let buttons = "";
+
+    players.forEach((candidate,candidateIndex)=>{
+
+      if(candidateIndex === index) return;
+
+      buttons += `
+        <button
+          class="vote-btn"
+          data-voter="${index}"
+          data-candidate="${candidateIndex}"
+          onclick="selectVote(${index},${candidateIndex},this)">
+          ${candidate}
+        </button>
+      `;
+    });
+
+    row.innerHTML = `
+      <h3>${voter} — تصوت على من؟</h3>
+      <div class="vote-buttons">
+        ${buttons}
+      </div>
+    `;
+
+    list.appendChild(row);
+  });
+
+  showScreen("voteScreen");
+}
+
+function selectVote(voter,candidate,button){
+
+  selectedVotes[voter] = candidate;
+
+  const row = button.parentElement;
+
+  row.querySelectorAll(".vote-btn").forEach(b=>{
+    b.classList.remove("selected");
+  });
+
+  button.classList.add("selected");
+}
+
+function finishVoting(){
+
+  if(Object.keys(selectedVotes).length !== players.length){
+
+    alert("لازم كل اللاعبين يصوتون");
+
+    return;
+  }
+
+  votes = {};
+
+  Object.values(selectedVotes).forEach(candidateIndex=>{
+
+    votes[candidateIndex] =
+      (votes[candidateIndex] || 0) + 1;
+
+  });
+
+  let maxVotes = Math.max(...Object.values(votes));
+
+  let winners = Object.keys(votes)
+    .filter(index=>votes[index] === maxVotes)
+    .map(Number);
+
+  let accusedIndex =
+    winners[Math.floor(Math.random()*winners.length)];
+
+  const accusedName = players[accusedIndex];
+
+  const result = document.getElementById("spyResult");
+
+  result.textContent = accusedName;
+
+  const message = document.getElementById("voteMessage");
+
+  if(accusedIndex === spyIndex){
+
+    result.style.color = "#d92727";
+
+    message.innerHTML =
+      "صح! هذا هو الجاسوس 🕵️";
+
+  }else{
+
+    result.style.color = "#d92727";
+
+    message.innerHTML =
+      "الجاسوس الحقيقي هو: <b>" +
+      players[spyIndex] +
+      "</b>";
+
+  }
+
+  showScreen("voteResultScreen");
+}
+
+function startSpyGuess(){
+
+  document.getElementById("guessPlayer").textContent =
+    players[spyIndex];
+
+  document.getElementById("guessResult").innerHTML = "";
+
+  createAnimalOptions();
+
+  showScreen("guessScreen");
+}
+
+function createAnimalOptions(){
+
+  const container =
+    document.getElementById("animalOptions");
+
+  container.innerHTML = "";
+
+  let options = [currentAnimal];
+
+  let others = animals.filter(a=>a !== currentAnimal);
+
+  while(options.length < 4){
+
+    let animal =
+      others[Math.floor(Math.random()*others.length)];
+
+    if(!options.includes(animal)){
+      options.push(animal);
+    }
+  }
+
+  options.sort(()=>Math.random()-0.5);
+
+  options.forEach(animal=>{
+
+    const btn = document.createElement("button");
+
+    btn.className = "option";
+
+    btn.textContent = animal;
+
+    btn.onclick = ()=>guessAnimal(animal,btn);
+
+    container.appendChild(btn);
+  });
+}
+
+function guessAnimal(answer,button){
+
+  document.querySelectorAll(".option").forEach(b=>{
+    b.disabled = true;
+  });
+
+  if(answer === currentAnimal){
+
+    button.classList.add("correct");
+
+    document.getElementById("guessResult").innerHTML = `
+      <h2 style="color:#24a148;margin-top:25px">
+        صح عليك! ✅
+      </h2>
+      <button class="big-btn green" onclick="showScores()">
+        عرض النقاط
+      </button>
+    `;
+
+    scores[players[spyIndex]] += 200;
+
+    players.forEach((name,index)=>{
+
+      if(index === spyIndex) return;
+
+      if(selectedVotes[index] === spyIndex){
+        scores[name] += 100;
+      }
+
+    });
+
+  }else{
+
+    button.classList.add("wrong");
+
+    document.querySelectorAll(".option").forEach(b=>{
+
+      if(b.textContent === currentAnimal){
+        b.classList.add("correct");
+      }
+
+    });
+
+    document.getElementById("guessResult").innerHTML = `
+      <h2 style="color:#d92727;margin-top:25px">
+        غلط ❌
+      </h2>
+
+      <p class="subtitle">
+        الحيوان الصحيح هو:
+        <b>${currentAnimal}</b>
+      </p>
+
+      <button class="big-btn blue" onclick="showScores()">
+        عرض النقاط
+      </button>
+    `;
+
+    players.forEach((name,index)=>{
+
+      if(index === spyIndex) return;
+
+      if(selectedVotes[index] === spyIndex){
+        scores[name] += 100;
+      }
+
+    });
+  }
+}
+
+function showScores(){
+
+  const list =
+    document.getElementById("scoreList");
+
+  list.innerHTML = "";
+
+  players.forEach(name=>{
+
+    const row = document.createElement("div");
+
+    row.className = "score-row";
+
+    row.innerHTML = `
+      <span>${name}</span>
+      <span class="points">${scores[name]} نقطة</span>
+    `;
+
+    list.appendChild(row);
+  });
+
+  showScreen("scoreScreen");
+}
+
+function newRound(){
+
+  startRound();
+}
+
+function showHomeConfirm(){
+
+  document.getElementById("homeModal")
+    .classList.add("show");
+}
+
+function closeHomeConfirm(){
+
+  document.getElementById("homeModal")
+    .classList.remove("show");
+}
+
+function goHome(){
+
+  closeHomeConfirm();
+
+  showScreen("homeScreen");
+}
+
 </script>
+
 </body>
 </html>
