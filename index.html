@@ -197,6 +197,36 @@ button{
   background:#ffffff25;
 }
 
+.book.locked{
+  background:
+    linear-gradient(135deg,#252b3b,#121722);
+  filter:none;
+}
+
+.book-lock{
+  position:absolute;
+  top:12px;
+  left:12px;
+  background:#0008;
+  border:1px solid #ffffff18;
+  padding:6px 9px;
+  border-radius:10px;
+  font-size:13px;
+  font-weight:900;
+}
+
+.book-price{
+  position:absolute;
+  bottom:12px;
+  left:12px;
+  background:#ffffff12;
+  border:1px solid #ffffff18;
+  padding:6px 9px;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:900;
+}
+
 .book-icon{
   font-size:48px;
   margin:8px 0 15px;
@@ -441,6 +471,11 @@ button{
   background:#d93c4d;
 }
 
+.unlock-icon{
+  font-size:55px;
+  margin-bottom:10px;
+}
+
 .hidden{
   display:none!important;
 }
@@ -479,7 +514,7 @@ button{
   <div class="topbar">
     <button class="home-btn" onclick="confirmHome()">⌂</button>
     <div class="logo">برا السالفة</div>
-    <div class="coins">🪙 100</div>
+    <div class="coins">🪙 <span class="coinAmount">200</span></div>
   </div>
 
   <div class="title">أضف اللاعبين</div>
@@ -508,7 +543,7 @@ button{
   <div class="topbar">
     <button class="home-btn" onclick="confirmHome()">⌂</button>
     <div class="logo">اختر اللعبة</div>
-    <div class="coins">🪙 100</div>
+    <div class="coins">🪙 <span class="coinAmount">200</span></div>
   </div>
 
   <div class="subtitle">
@@ -527,7 +562,7 @@ button{
   <div class="topbar">
     <button class="home-btn" onclick="confirmHome()">⌂</button>
     <div class="logo">برا السالفة</div>
-    <div class="coins">🪙 100</div>
+    <div class="coins">🪙 <span class="coinAmount">200</span></div>
   </div>
 
   <div class="card">
@@ -561,7 +596,7 @@ button{
   <div class="topbar">
     <button class="home-btn" onclick="confirmHome()">⌂</button>
     <div class="logo">دورك</div>
-    <div class="coins">🪙 100</div>
+    <div class="coins">🪙 <span class="coinAmount">200</span></div>
   </div>
 
   <div class="card">
@@ -590,7 +625,7 @@ button{
   <div class="topbar">
     <button class="home-btn" onclick="confirmHome()">⌂</button>
     <div class="logo" id="questionGameName">برا السالفة</div>
-    <div class="coins">🪙 100</div>
+    <div class="coins">🪙 <span class="coinAmount">200</span></div>
   </div>
 
   <div class="question-card">
@@ -629,7 +664,7 @@ button{
   <div class="topbar">
     <button class="home-btn" onclick="confirmHome()">⌂</button>
     <div class="logo">التصويت</div>
-    <div class="coins">🪙 100</div>
+    <div class="coins">🪙 <span class="coinAmount">200</span></div>
   </div>
 
   <div class="title" id="votePlayerTitle"></div>
@@ -650,7 +685,7 @@ button{
   <div class="topbar">
     <button class="home-btn" onclick="confirmHome()">⌂</button>
     <div class="logo">النتيجة</div>
-    <div class="coins">🪙 100</div>
+    <div class="coins">🪙 <span class="coinAmount">200</span></div>
   </div>
 
   <div class="card">
@@ -681,7 +716,7 @@ button{
   <div class="topbar">
     <button class="home-btn" onclick="confirmHome()">⌂</button>
     <div class="logo">تخمين الجاسوس</div>
-    <div class="coins">🪙 100</div>
+    <div class="coins">🪙 <span class="coinAmount">200</span></div>
   </div>
 
   <div class="card">
@@ -714,7 +749,7 @@ button{
   <div class="topbar">
     <button class="home-btn" onclick="confirmHome()">⌂</button>
     <div class="logo">النقاط</div>
-    <div class="coins">🪙 100</div>
+    <div class="coins">🪙 <span class="coinAmount">200</span></div>
   </div>
 
   <div class="title">نتيجة الجولة</div>
@@ -756,6 +791,38 @@ button{
 
       <button onclick="closeModal()">
         لا هونت
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- نافذة فتح التحدي -->
+<div id="unlockModal" class="modal">
+
+  <div class="modal-box">
+
+    <div class="unlock-icon">🔒</div>
+
+    <div class="modal-title" id="unlockTitle">
+      فتح التحدي
+    </div>
+
+    <div class="modal-text" id="unlockText">
+      هل تريد فتح هذا التحدي مقابل 50 🪙؟
+    </div>
+
+    <div class="modal-buttons">
+
+      <button class="yes" onclick="confirmUnlock()">
+        فتح بـ 50 🪙
+      </button>
+
+      <button onclick="closeUnlockModal()">
+        لا
       </button>
 
     </div>
@@ -1031,7 +1098,112 @@ const games = {
 
 
 /* =========================
-   المتغيرات
+   التحديات المقفلة
+========================= */
+
+const lockedGames = [
+  "series",
+  "football",
+  "food",
+  "cars",
+  "fruits",
+  "sweets"
+];
+
+const UNLOCK_PRICE = 50;
+const ROUND_REWARD = 50;
+const STARTING_COINS = 200;
+
+
+/* =========================
+   العملات والحفظ
+========================= */
+
+let coins = loadCoins();
+let unlockedGames = loadUnlockedGames();
+
+function loadCoins(){
+
+  const saved = localStorage.getItem("braAlsalfaCoins");
+
+  if(saved === null){
+    localStorage.setItem(
+      "braAlsalfaCoins",
+      String(STARTING_COINS)
+    );
+
+    return STARTING_COINS;
+  }
+
+  const number = parseInt(saved,10);
+
+  if(Number.isNaN(number)){
+    localStorage.setItem(
+      "braAlsalfaCoins",
+      String(STARTING_COINS)
+    );
+
+    return STARTING_COINS;
+  }
+
+  return number;
+}
+
+function loadUnlockedGames(){
+
+  const saved =
+    localStorage.getItem("braAlsalfaUnlockedGames");
+
+  if(!saved){
+
+    return [];
+  }
+
+  try{
+
+    const list=JSON.parse(saved);
+
+    if(!Array.isArray(list)){
+      return [];
+    }
+
+    return list;
+
+  }catch{
+
+    return [];
+  }
+}
+
+function saveCoins(){
+
+  localStorage.setItem(
+    "braAlsalfaCoins",
+    String(coins)
+  );
+
+  updateCoinsUI();
+}
+
+function saveUnlockedGames(){
+
+  localStorage.setItem(
+    "braAlsalfaUnlockedGames",
+    JSON.stringify(unlockedGames)
+  );
+}
+
+function updateCoinsUI(){
+
+  document.querySelectorAll(".coinAmount")
+    .forEach(element=>{
+      element.textContent=coins;
+    });
+}
+
+
+/* =========================
+   متغيرات اللعبة
 ========================= */
 
 let players = [];
@@ -1053,6 +1225,10 @@ let guessFinished = false;
 
 let previousSecrets = {};
 
+let roundRewardGiven = false;
+
+let pendingUnlockKey = null;
+
 
 /* =========================
    الصفحات
@@ -1061,11 +1237,16 @@ let previousSecrets = {};
 function showScreen(id){
 
   document.querySelectorAll(".screen")
-    .forEach(screen => screen.classList.remove("active"));
+    .forEach(screen =>
+      screen.classList.remove("active")
+    );
 
-  document.getElementById(id).classList.add("active");
+  document.getElementById(id)
+    .classList.add("active");
 
   window.scrollTo(0,0);
+
+  updateCoinsUI();
 }
 
 
@@ -1089,13 +1270,15 @@ function removePlayer(index){
 
 function renderPlayers(){
 
-  const box = document.getElementById("playersContainer");
+  const box =
+    document.getElementById("playersContainer");
 
   box.innerHTML="";
 
   players.forEach((name,index)=>{
 
     const row=document.createElement("div");
+
     row.className="player-row";
 
     row.innerHTML=`
@@ -1109,8 +1292,11 @@ function renderPlayers(){
       ${
         players.length>1
         ?
-        `<button class="remove-player"
-          onclick="removePlayer(${index})">×</button>`
+        `<button
+          class="remove-player"
+          onclick="removePlayer(${index})">
+          ×
+        </button>`
         :
         ""
       }
@@ -1131,14 +1317,12 @@ function escapeHtml(text){
     .replaceAll("'","&#039;");
 }
 
-
 function getCleanPlayers(){
 
   return players
     .map(p=>p.trim())
     .filter(Boolean);
 }
-
 
 function goToGames(){
 
@@ -1177,21 +1361,145 @@ function renderBooks(){
 
     const game=games[key];
 
+    const isLocked =
+      lockedGames.includes(key) &&
+      !unlockedGames.includes(key);
+
     const book=document.createElement("button");
 
-    book.className="book";
+    book.className =
+      "book" + (isLocked ? " locked" : "");
 
-    book.onclick=()=>startGame(key);
+    book.onclick=()=>{
+
+      if(isLocked){
+
+        openUnlockModal(key);
+
+      }else{
+
+        startGame(key);
+
+      }
+
+    };
 
     book.innerHTML=`
-      <div class="book-icon">${game.icon}</div>
-      <div class="book-name">${game.name}</div>
-      <div class="book-desc">${game.desc}</div>
+
+      ${
+        isLocked
+        ?
+        `
+        <div class="book-lock">
+          🔒 مقفل
+        </div>
+
+        <div class="book-price">
+          🪙 ${UNLOCK_PRICE}
+        </div>
+        `
+        :
+        ""
+      }
+
+      <div class="book-icon">
+        ${game.icon}
+      </div>
+
+      <div class="book-name">
+        ${game.name}
+      </div>
+
+      <div class="book-desc">
+        ${game.desc}
+      </div>
+
     `;
 
     box.appendChild(book);
 
   });
+
+}
+
+
+/* =========================
+   فتح التحدي
+========================= */
+
+function openUnlockModal(key){
+
+  pendingUnlockKey=key;
+
+  const game=games[key];
+
+  document.getElementById("unlockTitle")
+    .textContent=
+      "فتح تحدي " + game.name;
+
+  document.getElementById("unlockText")
+    .textContent=
+      `فتح هذا التحدي يكلف ${UNLOCK_PRICE} 🪙. عندك الآن ${coins} 🪙`;
+
+  document.getElementById("unlockModal")
+    .classList.add("show");
+
+}
+
+function closeUnlockModal(){
+
+  pendingUnlockKey=null;
+
+  document.getElementById("unlockModal")
+    .classList.remove("show");
+
+}
+
+function confirmUnlock(){
+
+  if(!pendingUnlockKey){
+
+    closeUnlockModal();
+
+    return;
+  }
+
+  if(unlockedGames.includes(pendingUnlockKey)){
+
+    const key=pendingUnlockKey;
+
+    closeUnlockModal();
+
+    startGame(key);
+
+    return;
+  }
+
+  if(coins < UNLOCK_PRICE){
+
+    document.getElementById("unlockText")
+      .textContent=
+        `ما عندك عملات كافية 😅 تحتاج ${UNLOCK_PRICE} 🪙 وعندك ${coins} 🪙`;
+
+    return;
+  }
+
+  coins -= UNLOCK_PRICE;
+
+  saveCoins();
+
+  unlockedGames.push(pendingUnlockKey);
+
+  saveUnlockedGames();
+
+  const key=pendingUnlockKey;
+
+  closeUnlockModal();
+
+  renderBooks();
+
+  startGame(key);
+
 }
 
 
@@ -1202,12 +1510,12 @@ function renderBooks(){
 function startGame(key){
 
   currentGameKey=key;
+
   currentGame=games[key];
 
   startNewRound();
 
 }
-
 
 function startNewRound(){
 
@@ -1219,17 +1527,23 @@ function startNewRound(){
 
   guessFinished=false;
 
+  roundRewardGiven=false;
+
   chooseSecret();
 
   currentSpyIndex=
-    Math.floor(Math.random()*players.length);
+    Math.floor(
+      Math.random()*players.length
+    );
 
-  document.getElementById("passPlayer").textContent=
-    players[currentPassIndex];
+  document.getElementById("passPlayer")
+    .textContent=
+      players[currentPassIndex];
 
-  document.getElementById("passInstruction").textContent=
-    currentGame.pass+
-    " — لا تخلي أحد غيرك يشوف الشاشة.";
+  document.getElementById("passInstruction")
+    .textContent=
+      currentGame.pass+
+      " — لا تخلي أحد غيرك يشوف الشاشة.";
 
   showScreen("passScreen");
 
@@ -1246,16 +1560,24 @@ function chooseSecret(){
 
   let available=items;
 
-  const previous=previousSecrets[currentGameKey];
+  const previous=
+    previousSecrets[currentGameKey];
 
   if(items.length>1 && previous){
 
-    available=items.filter(item=>item[1]!==previous);
+    available=
+      items.filter(
+        item=>item[1]!==previous
+      );
 
   }
 
   const chosen=
-    available[Math.floor(Math.random()*available.length)];
+    available[
+      Math.floor(
+        Math.random()*available.length
+      )
+    ];
 
   currentSecret=chosen;
 
@@ -1273,18 +1595,23 @@ function revealRole(){
   const isSpy=
     currentPassIndex===currentSpyIndex;
 
-  document.getElementById("roleTitle").textContent=
-    players[currentPassIndex];
+  document.getElementById("roleTitle")
+    .textContent=
+      players[currentPassIndex];
 
-  const roleText=document.getElementById("roleText");
+  const roleText=
+    document.getElementById("roleText");
 
-  const secretBox=document.getElementById("secretBox");
+  const secretBox=
+    document.getElementById("secretBox");
 
   if(isSpy){
 
-    document.getElementById("roleEmoji").textContent="🕵️";
+    document.getElementById("roleEmoji")
+      .textContent="🕵️";
 
-    roleText.className="info outside";
+    roleText.className=
+      "info outside";
 
     roleText.textContent=
       currentGame.outside;
@@ -1293,10 +1620,12 @@ function revealRole(){
 
   }else{
 
-    document.getElementById("roleEmoji").textContent=
-      currentSecret[0];
+    document.getElementById("roleEmoji")
+      .textContent=
+        currentSecret[0];
 
-    roleText.className="info inside";
+    roleText.className=
+      "info inside";
 
     roleText.textContent=
       currentGame.inside;
@@ -1324,12 +1653,14 @@ function nextPlayer(){
 
   if(currentPassIndex < players.length){
 
-    document.getElementById("passPlayer").textContent=
-      players[currentPassIndex];
+    document.getElementById("passPlayer")
+      .textContent=
+        players[currentPassIndex];
 
-    document.getElementById("passInstruction").textContent=
-      currentGame.pass+
-      " — لا تخلي أحد غيرك يشوف الشاشة.";
+    document.getElementById("passInstruction")
+      .textContent=
+        currentGame.pass+
+        " — لا تخلي أحد غيرك يشوف الشاشة.";
 
     showScreen("passScreen");
 
@@ -1348,22 +1679,25 @@ function nextPlayer(){
 
 function showQuestionScreen(){
 
-  document.getElementById("questionGameName").textContent=
-    currentGame.name;
+  document.getElementById("questionGameName")
+    .textContent=
+      currentGame.name;
 
-  document.getElementById("questionIcon").textContent=
-    currentGame.icon;
+  document.getElementById("questionIcon")
+    .textContent=
+      currentGame.icon;
 
-  document.getElementById("questionTitle").textContent=
-    "وقت الأسئلة";
+  document.getElementById("questionTitle")
+    .textContent=
+      "وقت الأسئلة";
 
-  document.getElementById("questionSub").textContent=
-    "اسألوا بعضكم عن السر، وحاولوا تكتشفون مين برا السالفة.";
+  document.getElementById("questionSub")
+    .textContent=
+      "اسألوا بعضكم عن السر، وحاولوا تكتشفون مين برا السالفة.";
 
   showScreen("questionScreen");
 
 }
-
 
 function continueQuestions(){
 
@@ -1386,7 +1720,6 @@ function startVoting(){
 
 }
 
-
 function showVoteForPlayer(){
 
   if(currentVoteIndex>=players.length){
@@ -1396,12 +1729,15 @@ function showVoteForPlayer(){
     return;
   }
 
-  const voter=players[currentVoteIndex];
+  const voter=
+    players[currentVoteIndex];
 
-  document.getElementById("votePlayerTitle").textContent=
-    voter+" يصوّت";
+  document.getElementById("votePlayerTitle")
+    .textContent=
+      voter+" يصوّت";
 
-  const list=document.getElementById("voteList");
+  const list=
+    document.getElementById("voteList");
 
   list.innerHTML="";
 
@@ -1409,13 +1745,15 @@ function showVoteForPlayer(){
 
     if(index===currentVoteIndex) return;
 
-    const button=document.createElement("button");
+    const button=
+      document.createElement("button");
 
     button.className="vote-btn";
 
     button.textContent=candidate;
 
-    button.onclick=()=>castVote(candidate);
+    button.onclick=
+      ()=>castVote(candidate);
 
     list.appendChild(button);
 
@@ -1425,10 +1763,11 @@ function showVoteForPlayer(){
 
 }
 
-
 function castVote(candidate){
 
-  votes[players[currentVoteIndex]]=candidate;
+  votes[
+    players[currentVoteIndex]
+  ]=candidate;
 
   currentVoteIndex++;
 
@@ -1443,10 +1782,12 @@ function castVote(candidate){
 
 function showResult(){
 
-  const spyName=players[currentSpyIndex];
+  const spyName=
+    players[currentSpyIndex];
 
-  document.getElementById("spyResultName").textContent=
-    spyName;
+  document.getElementById("spyResultName")
+    .textContent=
+      spyName;
 
   showScreen("resultScreen");
 
@@ -1459,13 +1800,16 @@ function showResult(){
 
 function showSpyGuess(){
 
-  const spyName=players[currentSpyIndex];
+  const spyName=
+    players[currentSpyIndex];
 
-  document.getElementById("guessPlayerName").textContent=
-    spyName;
+  document.getElementById("guessPlayerName")
+    .textContent=
+      spyName;
 
-  document.getElementById("guessText").textContent=
-    "اختر الإجابة التي تعتقد أنها السر.";
+  document.getElementById("guessText")
+    .textContent=
+      "اختر الإجابة التي تعتقد أنها السر.";
 
   createGuessOptions();
 
@@ -1473,25 +1817,35 @@ function showSpyGuess(){
 
 }
 
-
 function createGuessOptions(){
 
   const items=currentGame.items;
 
   let choices=[currentSecret];
 
-  const others=items.filter(item=>
-    item[1]!==currentSecret[1]
-  );
+  const others=
+    items.filter(
+      item=>item[1]!==currentSecret[1]
+    );
 
-  while(choices.length<4 && others.length){
+  while(
+    choices.length<4 &&
+    others.length
+  ){
 
     const index=
-      Math.floor(Math.random()*others.length);
+      Math.floor(
+        Math.random()*others.length
+      );
 
-    const item=others.splice(index,1)[0];
+    const item=
+      others.splice(index,1)[0];
 
-    if(!choices.some(x=>x[1]===item[1])){
+    if(
+      !choices.some(
+        x=>x[1]===item[1]
+      )
+    ){
 
       choices.push(item);
 
@@ -1499,26 +1853,33 @@ function createGuessOptions(){
 
   }
 
-  choices.sort(()=>Math.random()-.5);
+  choices.sort(
+    ()=>Math.random()-.5
+  );
 
   guessOptions=choices;
 
-  const grid=document.getElementById("guessGrid");
+  const grid=
+    document.getElementById("guessGrid");
 
   grid.innerHTML="";
 
   choices.forEach(item=>{
 
-    const button=document.createElement("button");
+    const button=
+      document.createElement("button");
 
     button.className="choice";
 
     button.innerHTML=`
-      <span class="emoji">${item[0]}</span>
+      <span class="emoji">
+        ${item[0]}
+      </span>
       ${item[1]}
     `;
 
-    button.onclick=()=>chooseGuess(button,item);
+    button.onclick=
+      ()=>chooseGuess(button,item);
 
     grid.appendChild(button);
 
@@ -1528,7 +1889,6 @@ function createGuessOptions(){
     .classList.add("hidden");
 
 }
-
 
 function chooseGuess(button,item){
 
@@ -1540,31 +1900,51 @@ function chooseGuess(button,item){
     item[1]===currentSecret[1];
 
   document.querySelectorAll(".choice")
-    .forEach(btn=>btn.disabled=true);
+    .forEach(btn=>{
+      btn.disabled=true;
+    });
 
   if(correct){
 
     button.classList.add("correct");
 
-    document.getElementById("guessText").innerHTML=
-      `<span class="inside">صح عليك! 🎉</span>`;
+    document.getElementById("guessText")
+      .innerHTML=
+        `<span class="inside">
+          صح عليك! 🎉
+        </span>`;
 
-    scores[players[currentSpyIndex]]+=200;
+    scores[
+      players[currentSpyIndex]
+    ]+=200;
 
   }else{
 
     button.classList.add("wrong");
 
-    document.getElementById("guessText").innerHTML=
-      `غلط 😅<br>السر كان: <b>${currentSecret[0]} ${currentSecret[1]}</b>`;
+    document.getElementById("guessText")
+      .innerHTML=
+        `غلط 😅<br>
+         السر كان:
+         <b>
+           ${currentSecret[0]}
+           ${currentSecret[1]}
+         </b>`;
 
   }
 
-  /* إعطاء 100 نقطة لكل شخص صوّت للجاسوس */
+
+  /* =========================
+     إعطاء 100 نقطة لكل شخص
+     صوّت للجاسوس
+  ========================= */
 
   players.forEach(player=>{
 
-    if(votes[player]===players[currentSpyIndex]){
+    if(
+      votes[player] ===
+      players[currentSpyIndex]
+    ){
 
       scores[player]+=100;
 
@@ -1572,13 +1952,33 @@ function chooseGuess(button,item){
 
   });
 
+
   document.getElementById("finishGuessBtn")
     .classList.remove("hidden");
 
 }
 
 
+/* =========================
+   إنهاء الجولة
+========================= */
+
 function finishRound(){
+
+  /*
+    +50 عملة مرة واحدة فقط
+    لكل جولة مكتملة
+  */
+
+  if(!roundRewardGiven){
+
+    roundRewardGiven=true;
+
+    coins += ROUND_REWARD;
+
+    saveCoins();
+
+  }
 
   renderScores();
 
@@ -1593,18 +1993,23 @@ function finishRound(){
 
 function renderScores(){
 
-  const box=document.getElementById("scoreList");
+  const box=
+    document.getElementById("scoreList");
 
   box.innerHTML="";
 
   players.forEach(player=>{
 
-    const row=document.createElement("div");
+    const row=
+      document.createElement("div");
 
     row.className="score-row";
 
     row.innerHTML=`
-      <span>${escapeHtml(player)}</span>
+      <span>
+        ${escapeHtml(player)}
+      </span>
+
       <span class="score-points">
         ${scores[player]||0} نقطة
       </span>
@@ -1639,14 +2044,12 @@ function confirmHome(){
 
 }
 
-
 function closeModal(){
 
   document.getElementById("homeModal")
     .classList.remove("show");
 
 }
-
 
 function goHome(){
 
@@ -1657,8 +2060,6 @@ function goHome(){
   currentSecret=null;
   currentSpyIndex=-1;
 
-  /* نرجع لاختيار أسماء اللاعبين */
-
   renderPlayers();
 
   showScreen("playersScreen");
@@ -1667,7 +2068,7 @@ function goHome(){
 
 
 /* =========================
-   بداية افتراضية
+   التشغيل الأول
 ========================= */
 
 if(players.length===0){
@@ -1677,6 +2078,8 @@ if(players.length===0){
   addPlayer("");
 
 }
+
+updateCoinsUI();
 
 </script>
 
