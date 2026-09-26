@@ -2,477 +2,743 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>برا السالفة</title>
 
 <style>
 *{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
 body{
-  margin:0;
-  font-family:Tahoma,Arial,sans-serif;
-  background:#8098d0;
-  color:#111;
-  min-height:100vh;
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f7f7f7;
+    color:#222;
 }
 
 button{
-  font:inherit;
-  border:0;
-  cursor:pointer;
+    font-family:inherit;
+    cursor:pointer;
+    border:0;
 }
 
 .screen{
-  display:none;
-  min-height:100vh;
-  padding:25px 18px 100px;
+    min-height:100vh;
+    padding:20px;
+    display:none;
 }
 
 .screen.active{
-  display:block;
+    display:block;
 }
 
-.title{
-  text-align:center;
-  font-size:38px;
-  font-weight:900;
-  margin:25px 0 10px;
-}
-
-.subtitle{
-  text-align:center;
-  font-size:20px;
-  line-height:1.8;
-}
-
-.card{
-  max-width:520px;
-  margin:30px auto;
-  background:#fff;
-  border-radius:25px;
-  padding:25px;
-  box-shadow:0 8px 0 rgba(0,0,0,.15);
-}
-
-.big-btn{
-  width:100%;
-  background:#111;
-  color:#fff;
-  padding:18px;
-  border-radius:18px;
-  font-size:22px;
-  font-weight:bold;
-  margin-top:15px;
-}
-
-.green{
-  background:#24a148;
-}
-
-.red{
-  background:#d92727;
-}
-
-.blue{
-  background:#4267d5;
-}
-
-.player-input{
-  display:flex;
-  gap:10px;
-  margin-top:15px;
-}
-
-.player-input input{
-  flex:1;
-  padding:15px;
-  border:2px solid #ddd;
-  border-radius:14px;
-  font-size:18px;
-}
-
-.player{
-  background:#eee;
-  padding:14px;
-  border-radius:14px;
-  margin-top:10px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-size:19px;
-}
-
-.remove{
-  background:#d92727;
-  color:#fff;
-  border-radius:10px;
-  padding:6px 12px;
-}
-
-.center{
-  text-align:center;
-}
-
-.player-name{
-  font-size:34px;
-  font-weight:900;
-  margin:20px 0;
-}
-
-.animal{
-  font-size:42px;
-  font-weight:900;
-  margin:20px 0;
-}
-
-.secret{
-  background:#f4f4f4;
-  border-radius:20px;
-  padding:25px;
-  text-align:center;
-}
-
-.option{
-  width:100%;
-  padding:17px;
-  background:#eee;
-  border-radius:15px;
-  margin:10px 0;
-  font-size:20px;
-  font-weight:bold;
-}
-
-.option.correct{
-  background:#24a148;
-  color:white;
-}
-
-.option.wrong{
-  background:#d92727;
-  color:white;
-}
-
-.vote-row{
-  margin:15px 0;
-  padding:15px;
-  background:#f2f2f2;
-  border-radius:16px;
-}
-
-.vote-row h3{
-  margin:0 0 10px;
-}
-
-.vote-buttons{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
-}
-
-.vote-btn{
-  padding:12px;
-  border-radius:12px;
-  background:#ddd;
-  font-weight:bold;
-}
-
-.vote-btn.selected{
-  background:#4267d5;
-  color:white;
-}
-
-.score-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:#fff;
-  padding:17px;
-  border-radius:17px;
-  margin:10px 0;
-  font-size:21px;
-  font-weight:bold;
-}
-
-.points{
-  background:#111;
-  color:#fff;
-  padding:8px 14px;
-  border-radius:12px;
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
 }
 
 .home{
-  position:fixed;
-  top:15px;
-  right:15px;
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  background:#fff;
-  font-size:25px;
-  z-index:10;
+    width:48px;
+    height:48px;
+    border-radius:15px;
+    background:white;
+    box-shadow:0 4px 15px rgba(0,0,0,.12);
+    font-size:24px;
+}
+
+.coins{
+    background:white;
+    padding:10px 15px;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,.1);
+    font-weight:bold;
+}
+
+.logo{
+    text-align:center;
+    font-size:40px;
+    font-weight:900;
+    margin:25px 0 5px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#777;
+    margin-bottom:30px;
+}
+
+.footer{
+    position:fixed;
+    bottom:15px;
+    left:0;
+    right:0;
+    text-align:center;
+    color:#777;
+    font-size:14px;
+}
+
+.card{
+    background:white;
+    border-radius:25px;
+    padding:22px;
+    box-shadow:0 6px 25px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:16px;
+    border:2px solid #eee;
+    border-radius:16px;
+    font-size:17px;
+    outline:none;
+    margin-bottom:10px;
+    text-align:right;
+}
+
+input:focus{
+    border-color:#222;
+}
+
+.main-btn{
+    width:100%;
+    padding:17px;
+    border-radius:18px;
+    background:#222;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.secondary-btn{
+    width:100%;
+    padding:16px;
+    border-radius:18px;
+    background:#eee;
+    color:#222;
+    font-size:17px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.danger-btn{
+    background:#e53935;
+    color:white;
+}
+
+.players-list{
+    margin-top:15px;
+}
+
+.player-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#f5f5f5;
+    padding:13px 15px;
+    border-radius:15px;
+    margin-bottom:8px;
+}
+
+.remove-player{
+    background:#ffdddd;
+    color:#d00;
+    width:35px;
+    height:35px;
+    border-radius:10px;
+    font-size:18px;
+}
+
+.title{
+    text-align:center;
+    font-size:30px;
+    font-weight:900;
+    margin:25px 0 10px;
+}
+
+.center{
+    text-align:center;
+}
+
+.book-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-top:25px;
+}
+
+.book{
+    min-height:150px;
+    background:white;
+    border-radius:22px;
+    padding:20px 12px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.09);
+    font-size:19px;
+    font-weight:bold;
+}
+
+.book-icon{
+    font-size:45px;
+    margin-bottom:10px;
+}
+
+.role-card{
+    min-height:60vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.role-name{
+    font-size:34px;
+    font-weight:900;
+    margin-bottom:20px;
+}
+
+.role-text{
+    font-size:25px;
+    font-weight:bold;
+    line-height:1.6;
+}
+
+.animal{
+    font-size:70px;
+    margin:20px 0;
+}
+
+.warning{
+    color:#d71920;
+    font-size:26px;
+    font-weight:900;
+}
+
+.question-box{
+    text-align:center;
+    padding-top:80px;
+}
+
+.question-box .big{
+    font-size:60px;
+    margin-bottom:20px;
+}
+
+.question-box h2{
+    font-size:32px;
+}
+
+.choice-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-top:30px;
+}
+
+.choice-btn{
+    padding:30px 10px;
+    border-radius:22px;
+    background:white;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+    font-size:23px;
+    font-weight:bold;
+}
+
+.vote-list{
+    margin-top:25px;
+}
+
+.vote-player{
+    background:white;
+    padding:18px;
+    border-radius:18px;
+    margin-bottom:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,.07);
+}
+
+.vote-player h3{
+    margin:0 0 12px;
+}
+
+.vote-options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.vote-option{
+    padding:13px 8px;
+    border-radius:13px;
+    background:#eee;
+    font-weight:bold;
+}
+
+.vote-option.selected{
+    background:#222;
+    color:white;
+}
+
+.reveal-card{
+    text-align:center;
+    padding-top:70px;
+}
+
+.reveal-card h1{
+    font-size:36px;
+}
+
+.spy-name{
+    color:#e00000;
+    font-size:34px;
+    font-weight:900;
+}
+
+.correct{
+    background:#2e9d50 !important;
+    color:white !important;
+}
+
+.wrong{
+    background:#e53935 !important;
+    color:white !important;
+}
+
+.animal-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:13px;
+    margin-top:25px;
+}
+
+.animal-option{
+    background:white;
+    padding:20px 10px;
+    border-radius:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+    font-size:22px;
+    font-weight:bold;
+}
+
+.score-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:17px;
+    background:white;
+    border-radius:18px;
+    margin-bottom:10px;
+    box-shadow:0 4px 15px rgba(0,0,0,.07);
+}
+
+.score{
+    font-size:22px;
+    font-weight:900;
 }
 
 .modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:50;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:1000;
 }
 
-.modal.show{
-  display:flex;
+.modal.active{
+    display:flex;
 }
 
 .modal-box{
-  background:#fff;
-  border-radius:25px;
-  padding:25px;
-  max-width:430px;
-  width:100%;
-  text-align:center;
+    width:100%;
+    max-width:400px;
+    background:white;
+    border-radius:28px;
+    padding:28px;
+    text-align:center;
 }
 
 .modal-box h2{
-  margin-top:0;
+    margin-top:0;
+    font-size:25px;
 }
 
-.credit{
-  text-align:center;
-  margin-top:30px;
-  font-size:16px;
+.modal-box p{
+    color:#666;
+    line-height:1.6;
+}
+
+@media(max-width:400px){
+    .logo{
+        font-size:34px;
+    }
+
+    .title{
+        font-size:27px;
+    }
+
+    .role-text{
+        font-size:21px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- الصفحة الرئيسية -->
-<section id="homeScreen" class="screen active">
-  <div class="title">برا السالفة</div>
+<!-- صفحة اللاعبين -->
+<section id="playersScreen" class="screen active">
 
-  <div class="card center">
-    <h2>لعبة الجاسوس 🕵️</h2>
-    <p class="subtitle">
-      لاعب واحد برا السالفة، والباقي يعرفون الحيوان.
-    </p>
-
-    <button class="big-btn" onclick="showPlayers()">
-      ابدأ اللعبة
-    </button>
-  </div>
-
-  <div class="credit">تصميم عادل</div>
-</section>
-
-
-<!-- اللاعبين -->
-<section id="playersScreen" class="screen">
-
-  <button class="home" onclick="showHomeConfirm()">⌂</button>
-
-  <div class="title">اللاعبين</div>
-
-  <div class="card">
-
-    <p class="subtitle">
-      أضف على الأقل 3 لاعبين
-    </p>
-
-    <div class="player-input">
-      <input id="playerName" type="text" placeholder="اسم اللاعب">
-      <button class="big-btn" style="margin:0;width:auto" onclick="addPlayer()">إضافة</button>
+    <div class="top">
+        <button class="home" onclick="openHomeModal()">🏠</button>
+        <div class="coins">🪙 0</div>
     </div>
 
-    <div id="playersList"></div>
+    <div class="logo">برا السالفة</div>
 
-    <button class="big-btn green" onclick="startRound()">
-      التالي
+    <div class="subtitle">
+        أضف على الأقل 3 لاعبين ثم اضغط التالي
+    </div>
+
+    <div class="card">
+
+        <input
+            id="playerInput"
+            type="text"
+            placeholder="اكتب اسم اللاعب"
+            maxlength="20"
+        >
+
+        <button class="main-btn" onclick="addPlayer()">
+            ＋ إضافة لاعب
+        </button>
+
+        <div id="playersList" class="players-list"></div>
+
+    </div>
+
+    <button class="main-btn" onclick="goToCategories()">
+        التالي
     </button>
 
-  </div>
+    <div class="footer">
+        تصميم عادل
+    </div>
+
 </section>
 
 
-<!-- توزيع الأدوار -->
+<!-- صفحة اختيار اللعبة -->
+<section id="categoriesScreen" class="screen">
+
+    <div class="top">
+        <button class="home" onclick="openHomeModal()">🏠</button>
+        <div class="coins">🪙 0</div>
+    </div>
+
+    <div class="title">اختر اللعبة</div>
+
+    <div class="book-grid">
+
+        <button class="book" onclick="startRound()">
+            <div class="book-icon">🕵️</div>
+            الجاسوس
+        </button>
+
+        <button class="book">
+            <div class="book-icon">👤</div>
+            شخصيات
+        </button>
+
+        <button class="book">
+            <div class="book-icon">🥤</div>
+            مشروبات
+        </button>
+
+        <button class="book">
+            <div class="book-icon">🎬</div>
+            كرتون
+        </button>
+
+        <button class="book">
+            <div class="book-icon">📺</div>
+            مسلسلات
+        </button>
+
+        <button class="book">
+            <div class="book-icon">🍰</div>
+            حلويات
+        </button>
+
+        <button class="book">
+            <div class="book-icon">🎮</div>
+            قيمنق
+        </button>
+
+        <button class="book">
+            <div class="book-icon">⚽</div>
+            كورة
+        </button>
+
+        <button class="book">
+            <div class="book-icon">🍔</div>
+            أكلات
+        </button>
+
+        <button class="book">
+            <div class="book-icon">🚗</div>
+            سيارات
+        </button>
+
+        <button class="book">
+            <div class="book-icon">🐾</div>
+            حيوانات
+        </button>
+
+        <button class="book">
+            <div class="book-icon">🍎</div>
+            فواكه وخضار
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- صفحة تسليم الجوال -->
+<section id="passScreen" class="screen">
+
+    <div class="top">
+        <button class="home" onclick="openHomeModal()">🏠</button>
+    </div>
+
+    <div class="role-card">
+
+        <div class="role-name">
+            اعطوا الجوال لـ <span id="passPlayer"></span>
+        </div>
+
+        <p class="role-text">
+            اضغط التالي حتى تعرف هل أنت برا السالفة أو داخلها
+            <br>
+            ولا تخلي أحد غيرك يشوف الشاشة!
+        </p>
+
+        <button class="main-btn" onclick="showRole()">
+            تم
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- صفحة كشف الدور -->
 <section id="roleScreen" class="screen">
 
-  <button class="home" onclick="showHomeConfirm()">⌂</button>
+    <div class="top">
+        <button class="home" onclick="openHomeModal()">🏠</button>
+    </div>
 
-  <div class="title">برا السالفة</div>
+    <div class="role-card">
 
-  <div class="card center">
+        <div id="roleName" class="role-name"></div>
 
-    <div id="rolePlayer" class="player-name"></div>
+        <div id="roleContent"></div>
 
-    <p class="subtitle">
-      اعطوا الجوال لهذا اللاعب<br>
-      واضغط تم حتى يعرف دوره
-    </p>
+        <button class="main-btn" onclick="nextRole()">
+            التالي
+        </button>
 
-    <button id="roleButton" class="big-btn" onclick="showRole()">
-      تم
-    </button>
+    </div>
 
-    <div id="roleResult"></div>
-
-  </div>
 </section>
 
 
-<!-- مرحلة الأسئلة الواقعية -->
-<section id="questionScreen" class="screen">
+<!-- صفحة الأسئلة -->
+<section id="questionsScreen" class="screen">
 
-  <button class="home" onclick="showHomeConfirm()">⌂</button>
+    <div class="top">
+        <button class="home" onclick="openHomeModal()">🏠</button>
+    </div>
 
-  <div class="title">وقت اللعب</div>
+    <div class="question-box">
 
-  <div class="card center">
+        <div class="big">🗣️</div>
 
-    <h2>الحين دوركم 😈</h2>
+        <h2>وقت اللعب</h2>
 
-    <p class="subtitle">
-      اسألوا بعضكم في الحياة الواقعية<br>
-      وحاولوا تعرفون مين برا السالفة.
-    </p>
+        <p>
+            الحين اسألوا بعض أسئلة عن السالفة
+            وحاولوا تعرفون من برا السالفة.
+        </p>
 
-    <button class="big-btn blue" onclick="openChoice()">
-      انتهينا من الأسئلة
-    </button>
+        <button class="main-btn" onclick="showChoices()">
+            انتهينا من الأسئلة
+        </button>
 
-  </div>
+    </div>
+
 </section>
 
 
 <!-- سؤال أو تصويت -->
 <section id="choiceScreen" class="screen">
 
-  <button class="home" onclick="showHomeConfirm()">⌂</button>
+    <div class="top">
+        <button class="home" onclick="openHomeModal()">🏠</button>
+    </div>
 
-  <div class="title">وش تسوون؟</div>
+    <div class="title">
+        وش تبغون تسوون؟
+    </div>
 
-  <div class="card center">
+    <div class="choice-grid">
 
-    <button class="big-btn blue" onclick="backToQuestions()">
-      سؤال
-    </button>
+        <button class="choice-btn" onclick="backToQuestions()">
+            🗣️
+            <br>
+            سؤال
+        </button>
 
-    <button class="big-btn red" onclick="startVoting()">
-      تصويت
-    </button>
+        <button class="choice-btn" onclick="startVoting()">
+            🗳️
+            <br>
+            تصويت
+        </button>
 
-  </div>
+    </div>
+
 </section>
 
 
-<!-- التصويت -->
-<section id="voteScreen" class="screen">
+<!-- صفحة التصويت -->
+<section id="votingScreen" class="screen">
 
-  <button class="home" onclick="showHomeConfirm()">⌂</button>
+    <div class="top">
+        <button class="home" onclick="openHomeModal()">🏠</button>
+    </div>
 
-  <div class="title">التصويت</div>
+    <div class="title">
+        التصويت
+    </div>
 
-  <div class="card">
-
-    <p class="subtitle">
-      كل لاعب يختار الشخص الذي يعتقد أنه الجاسوس.
+    <p class="center">
+        كل لاعب يختار الشخص اللي يشك فيه.
     </p>
 
-    <div id="voteList"></div>
+    <div id="votingList" class="vote-list"></div>
 
-    <button class="big-btn green" onclick="finishVoting()">
-      تأكيد التصويت
+    <button class="main-btn" onclick="finishVoting()">
+        إظهار النتيجة
     </button>
 
-  </div>
 </section>
 
 
 <!-- نتيجة التصويت -->
 <section id="voteResultScreen" class="screen">
 
-  <button class="home" onclick="showHomeConfirm()">⌂</button>
+    <div class="top">
+        <button class="home" onclick="openHomeModal()">🏠</button>
+    </div>
 
-  <div class="title">نتيجة التصويت</div>
+    <div class="reveal-card">
 
-  <div class="card center">
+        <div style="font-size:60px;">🗳️</div>
 
-    <h2>الجاسوس هو:</h2>
+        <h1>نتيجة التصويت</h1>
 
-    <div id="spyResult" class="player-name"></div>
+        <div id="accusedResult"></div>
 
-    <p id="voteMessage" class="subtitle"></p>
+        <button class="main-btn" onclick="startSpyGuess()">
+            التالي
+        </button>
 
-    <button class="big-btn blue" onclick="startSpyGuess()">
-      التالي
-    </button>
+    </div>
 
-  </div>
 </section>
 
 
-<!-- تخمين الحيوان -->
+<!-- تخمين الجاسوس -->
 <section id="guessScreen" class="screen">
 
-  <div class="title">تخمين الحيوان</div>
+    <div class="top">
+        <button class="home" onclick="openHomeModal()">🏠</button>
+    </div>
 
-  <div class="card center">
+    <div class="title">
+        دور الجاسوس
+    </div>
 
-    <h2 id="guessPlayer"></h2>
+    <div class="center">
 
-    <p class="subtitle">
-      حاول تعرف وش الحيوان 🕵️
-    </p>
+        <p>
+            حاول تعرف وش الحيوان!
+        </p>
 
-    <div id="animalOptions"></div>
+        <div id="animalOptions" class="animal-grid"></div>
 
-    <div id="guessResult"></div>
+    </div>
 
-  </div>
 </section>
 
 
-<!-- النقاط -->
-<section id="scoreScreen" class="screen">
+<!-- النتيجة النهائية -->
+<section id="scoresScreen" class="screen">
 
-  <div class="title">النقاط</div>
+    <div class="top">
+        <button class="home" onclick="openHomeModal()">🏠</button>
+    </div>
 
-  <div class="card">
+    <div class="title">
+        النتائج 🏆
+    </div>
 
-    <div id="scoreList"></div>
+    <div id="scoresList"></div>
 
-    <button class="big-btn green" onclick="newRound()">
-      جولة جديدة →
+    <button class="main-btn" onclick="newRound()">
+        جولة جديدة →
     </button>
 
-  </div>
 </section>
 
 
-<!-- نافذة الخروج -->
+<!-- نافذة البيت -->
 <div id="homeModal" class="modal">
 
-  <div class="modal-box">
+    <div class="modal-box">
 
-    <h2>متأكد تبغى تطلع برا القيم؟</h2>
+        <h2>
+            متأكد تبغى تطلع برا السالفة؟
+            <br>
+            نقصد برا اللعبة؟ 😅
+        </h2>
 
-    <p>بتطلع من الجولة الحالية.</p>
+        <p>
+            إذا اخترت الخروج راح ترجع لصفحة اختيار أسماء اللاعبين.
+        </p>
 
-    <button class="big-btn red" onclick="goHome()">
-      إيه متأكد
-    </button>
+        <button class="main-btn danger-btn" onclick="confirmHome()">
+            إيه متأكد
+        </button>
 
-    <button class="big-btn" onclick="closeHomeConfirm()">
-      لا هونت
-    </button>
+        <button class="secondary-btn" onclick="closeHomeModal()">
+            لا هونت
+        </button>
 
-  </div>
+    </div>
 
 </div>
 
@@ -491,481 +757,684 @@ let previousAnimal = "";
 let votes = {};
 let selectedVotes = {};
 
-let animals = [
-  "كلب 🐕",
-  "قط 🐈",
-  "أسد 🦁",
-  "نمر 🐯",
-  "فيل 🐘",
-  "زرافة 🦒",
-  "قرد 🐒",
-  "دب 🐻",
-  "حصان 🐎",
-  "بقرة 🐄",
-  "خروف 🐑",
-  "أرنب 🐇",
-  "دجاجة 🐔",
-  "بطريق 🐧",
-  "دولفين 🐬",
-  "سمكة 🐟",
-  "تمساح 🐊",
-  "ثعلب 🦊",
-  "ذئب 🐺",
-  "باندا 🐼"
+
+// الحيوانات
+const animals = [
+    {name:"كلب", emoji:"🐶"},
+    {name:"قطة", emoji:"🐱"},
+    {name:"أسد", emoji:"🦁"},
+    {name:"نمر", emoji:"🐯"},
+    {name:"فيل", emoji:"🐘"},
+    {name:"زرافة", emoji:"🦒"},
+    {name:"قرد", emoji:"🐒"},
+    {name:"دب", emoji:"🐻"},
+    {name:"حصان", emoji:"🐴"},
+    {name:"بقرة", emoji:"🐮"},
+    {name:"خروف", emoji:"🐑"},
+    {name:"أرنب", emoji:"🐰"},
+    {name:"دجاجة", emoji:"🐔"},
+    {name:"بطريق", emoji:"🐧"},
+    {name:"دلفين", emoji:"🐬"},
+    {name:"سمكة", emoji:"🐟"},
+    {name:"تمساح", emoji:"🐊"},
+    {name:"ثعلب", emoji:"🦊"},
+    {name:"ذئب", emoji:"🐺"},
+    {name:"باندا", emoji:"🐼"}
 ];
 
+
 function showScreen(id){
-  document.querySelectorAll(".screen").forEach(s=>{
-    s.classList.remove("active");
-  });
 
-  document.getElementById(id).classList.add("active");
+    document.querySelectorAll(".screen").forEach(screen=>{
+        screen.classList.remove("active");
+    });
 
-  window.scrollTo(0,0);
+    document.getElementById(id).classList.add("active");
+
+    window.scrollTo(0,0);
 }
 
-function showPlayers(){
-  showScreen("playersScreen");
-}
 
+// إضافة لاعب
 function addPlayer(){
 
-  const input = document.getElementById("playerName");
-  const name = input.value.trim();
+    const input = document.getElementById("playerInput");
+    const name = input.value.trim();
 
-  if(!name) return;
+    if(!name){
+        alert("اكتب اسم اللاعب أول");
+        return;
+    }
 
-  if(players.includes(name)){
-    alert("الاسم موجود من قبل");
-    return;
-  }
+    if(players.includes(name)){
+        alert("هذا الاسم موجود");
+        return;
+    }
 
-  players.push(name);
-  scores[name] = scores[name] || 0;
+    if(players.length >= 20){
+        alert("الحد الأقصى 20 لاعب");
+        return;
+    }
 
-  input.value = "";
+    players.push(name);
+    scores[name] = scores[name] || 0;
 
-  renderPlayers();
+    input.value = "";
+
+    renderPlayers();
 }
 
+
+// عرض اللاعبين
 function renderPlayers(){
 
-  const list = document.getElementById("playersList");
+    const list = document.getElementById("playersList");
 
-  list.innerHTML = "";
+    list.innerHTML = "";
 
-  players.forEach((name,index)=>{
+    players.forEach((player,index)=>{
 
-    const div = document.createElement("div");
+        const item = document.createElement("div");
 
-    div.className = "player";
+        item.className = "player-item";
 
-    div.innerHTML = `
-      <span>${name}</span>
-      <button class="remove" onclick="removePlayer(${index})">حذف</button>
-    `;
+        item.innerHTML = `
+            <span>${index + 1}. ${escapeHTML(player)}</span>
+            <button class="remove-player" onclick="removePlayer(${index})">×</button>
+        `;
 
-    list.appendChild(div);
-  });
+        list.appendChild(item);
+    });
 }
 
+
+// حذف لاعب
 function removePlayer(index){
 
-  const name = players[index];
+    const name = players[index];
 
-  players.splice(index,1);
+    delete scores[name];
 
-  delete scores[name];
+    players.splice(index,1);
 
-  renderPlayers();
+    renderPlayers();
 }
 
+
+// صفحة اختيار اللعبة
+function goToCategories(){
+
+    if(players.length < 3){
+
+        alert("لازم تضيف 3 لاعبين على الأقل");
+
+        return;
+    }
+
+    showScreen("categoriesScreen");
+}
+
+
+// اختيار حيوان جديد
 function chooseAnimal(){
 
-  let available = animals.filter(a=>a !== previousAnimal);
+    let available = animals.filter(
+        animal => animal.name !== previousAnimal
+    );
 
-  currentAnimal =
-    available[Math.floor(Math.random()*available.length)];
+    const chosen =
+        available[Math.floor(Math.random()*available.length)];
 
-  previousAnimal = currentAnimal;
+    currentAnimal = chosen.name;
+
+    previousAnimal = currentAnimal;
 }
 
+
+// بدء الجولة
 function startRound(){
 
-  if(players.length < 3){
-    alert("لازم تضيف 3 لاعبين على الأقل");
-    return;
-  }
+    if(players.length < 3){
 
-  chooseAnimal();
+        alert("لازم 3 لاعبين على الأقل");
 
-  spyIndex = Math.floor(Math.random()*players.length);
+        return;
+    }
 
-  currentPlayerIndex = 0;
+    chooseAnimal();
 
-  votes = {};
-  selectedVotes = {};
+    spyIndex = Math.floor(Math.random()*players.length);
 
-  document.getElementById("rolePlayer").textContent =
-    players[currentPlayerIndex];
+    currentPlayerIndex = 0;
 
-  document.getElementById("roleResult").innerHTML = "";
+    votes = {};
+    selectedVotes = {};
 
-  document.getElementById("roleButton").style.display = "block";
+    players.forEach(player=>{
+        votes[player] = null;
+    });
 
-  showScreen("roleScreen");
+    showPassScreen();
 }
 
+
+// شاشة تسليم الجوال
+function showPassScreen(){
+
+    document.getElementById("passPlayer").textContent =
+        players[currentPlayerIndex];
+
+    showScreen("passScreen");
+}
+
+
+// إظهار الدور
 function showRole(){
 
-  const name = players[currentPlayerIndex];
+    const player = players[currentPlayerIndex];
 
-  const result = document.getElementById("roleResult");
+    document.getElementById("roleName").textContent =
+        player;
 
-  document.getElementById("roleButton").style.display = "none";
+    const content =
+        document.getElementById("roleContent");
 
-  if(currentPlayerIndex === spyIndex){
+    if(currentPlayerIndex === spyIndex){
 
-    result.innerHTML = `
-      <div class="secret">
-        <h2 style="color:#d92727">أنت برا السالفة 🔴</h2>
-        <p class="subtitle">
-          حاول تعرف وش الحيوان.
-        </p>
-      </div>
-    `;
+        content.innerHTML = `
+            <div class="warning">
+                أنت برا السالفة
+            </div>
 
-  }else{
+            <div class="animal">
+                🕵️
+            </div>
 
-    result.innerHTML = `
-      <div class="secret">
-        <h2 style="color:#24a148">أنت داخل السالفة 🟢</h2>
-        <div class="animal">${currentAnimal}</div>
-      </div>
-    `;
-  }
-
-  const next = document.createElement("button");
-
-  next.className = "big-btn blue";
-
-  next.textContent =
-    currentPlayerIndex === players.length-1
-      ? "ابدأ اللعب"
-      : "التالي";
-
-  next.onclick = ()=>{
-
-    if(currentPlayerIndex === players.length-1){
-
-      showScreen("questionScreen");
+            <p class="role-text">
+                حاول تعرف وش الحيوان!
+            </p>
+        `;
 
     }else{
 
-      currentPlayerIndex++;
+        const animal =
+            animals.find(a => a.name === currentAnimal);
 
-      document.getElementById("rolePlayer").textContent =
-        players[currentPlayerIndex];
+        content.innerHTML = `
+            <div class="role-text">
+                أنت داخل السالفة
+            </div>
 
-      document.getElementById("roleResult").innerHTML = "";
+            <div class="animal">
+                ${animal.emoji}
+            </div>
 
-      document.getElementById("roleButton").style.display = "block";
-
-      next.remove();
+            <div class="role-text">
+                ${animal.name}
+            </div>
+        `;
     }
 
-  };
-
-  result.appendChild(next);
+    showScreen("roleScreen");
 }
 
+
+// اللاعب التالي
+function nextRole(){
+
+    currentPlayerIndex++;
+
+    if(currentPlayerIndex < players.length){
+
+        showPassScreen();
+
+    }else{
+
+        showScreen("questionsScreen");
+
+    }
+}
+
+
+// الانتقال للاختيارات
+function showChoices(){
+
+    showScreen("choiceScreen");
+
+}
+
+
+// الرجوع للأسئلة
 function backToQuestions(){
-  showScreen("questionScreen");
+
+    showScreen("questionsScreen");
+
 }
 
-function openChoice(){
-  showScreen("choiceScreen");
-}
 
+// بدء التصويت
 function startVoting(){
 
-  selectedVotes = {};
+    selectedVotes = {};
 
-  const list = document.getElementById("voteList");
+    renderVoting();
 
-  list.innerHTML = "";
+    showScreen("votingScreen");
 
-  players.forEach((voter,index)=>{
+}
 
-    const row = document.createElement("div");
 
-    row.className = "vote-row";
+// رسم التصويت
+function renderVoting(){
 
-    let buttons = "";
+    const container =
+        document.getElementById("votingList");
 
-    players.forEach((candidate,candidateIndex)=>{
+    container.innerHTML = "";
 
-      if(candidateIndex === index) return;
+    players.forEach(player=>{
 
-      buttons += `
-        <button
-          class="vote-btn"
-          data-voter="${index}"
-          data-candidate="${candidateIndex}"
-          onclick="selectVote(${index},${candidateIndex},this)">
-          ${candidate}
-        </button>
-      `;
+        const box =
+            document.createElement("div");
+
+        box.className = "vote-player";
+
+        let options = "";
+
+        players.forEach(target=>{
+
+            if(target === player) return;
+
+            const selected =
+                selectedVotes[player] === target
+                ? "selected"
+                : "";
+
+            options += `
+                <button
+                    class="vote-option ${selected}"
+                    onclick="selectVote('${escapeAttribute(player)}','${escapeAttribute(target)}')"
+                >
+                    ${escapeHTML(target)}
+                </button>
+            `;
+        });
+
+        box.innerHTML = `
+            <h3>${escapeHTML(player)} يصوت لـ:</h3>
+
+            <div class="vote-options">
+                ${options}
+            </div>
+        `;
+
+        container.appendChild(box);
+
     });
 
-    row.innerHTML = `
-      <h3>${voter} — تصوت على من؟</h3>
-      <div class="vote-buttons">
-        ${buttons}
-      </div>
-    `;
-
-    list.appendChild(row);
-  });
-
-  showScreen("voteScreen");
 }
 
-function selectVote(voter,candidate,button){
 
-  selectedVotes[voter] = candidate;
+// اختيار التصويت
+function selectVote(voter,target){
 
-  const row = button.parentElement;
+    selectedVotes[voter] = target;
 
-  row.querySelectorAll(".vote-btn").forEach(b=>{
-    b.classList.remove("selected");
-  });
+    renderVoting();
 
-  button.classList.add("selected");
 }
 
+
+// إنهاء التصويت
 function finishVoting(){
 
-  if(Object.keys(selectedVotes).length !== players.length){
+    if(Object.keys(selectedVotes).length !== players.length){
 
-    alert("لازم كل اللاعبين يصوتون");
+        alert("لازم كل لاعب يصوت");
 
-    return;
-  }
+        return;
+    }
 
-  votes = {};
 
-  Object.values(selectedVotes).forEach(candidateIndex=>{
+    const count = {};
 
-    votes[candidateIndex] =
-      (votes[candidateIndex] || 0) + 1;
+    players.forEach(player=>{
+        count[player] = 0;
+    });
 
-  });
 
-  let maxVotes = Math.max(...Object.values(votes));
+    Object.values(selectedVotes).forEach(target=>{
+        count[target]++;
+    });
 
-  let winners = Object.keys(votes)
-    .filter(index=>votes[index] === maxVotes)
-    .map(Number);
 
-  let accusedIndex =
-    winners[Math.floor(Math.random()*winners.length)];
+    let maxVotes = Math.max(...Object.values(count));
 
-  const accusedName = players[accusedIndex];
+    let candidates =
+        players.filter(
+            player => count[player] === maxVotes
+        );
 
-  const result = document.getElementById("spyResult");
 
-  result.textContent = accusedName;
+    const accused =
+        candidates[Math.floor(Math.random()*candidates.length)];
 
-  const message = document.getElementById("voteMessage");
 
-  if(accusedIndex === spyIndex){
+    let actualSpy = players[spyIndex];
 
-    result.style.color = "#d92727";
 
-    message.innerHTML =
-      "صح! هذا هو الجاسوس 🕵️";
+    if(accused === actualSpy){
 
-  }else{
+        document.getElementById("accusedResult").innerHTML = `
+            <h2>تم كشف الجاسوس!</h2>
 
-    result.style.color = "#d92727";
+            <div class="spy-name">
+                ${escapeHTML(actualSpy)}
+            </div>
 
-    message.innerHTML =
-      "الجاسوس الحقيقي هو: <b>" +
-      players[spyIndex] +
-      "</b>";
+            <p>
+                أغلب التصويت كان على الجاسوس.
+            </p>
+        `;
 
-  }
+    }else{
 
-  showScreen("voteResultScreen");
+        document.getElementById("accusedResult").innerHTML = `
+            <h2>التصويت كان على:</h2>
+
+            <div style="font-size:32px;font-weight:900;">
+                ${escapeHTML(accused)}
+            </div>
+
+            <p>
+                لكن الجاسوس الحقيقي هو:
+            </p>
+
+            <div class="spy-name">
+                ${escapeHTML(actualSpy)}
+            </div>
+        `;
+    }
+
+
+    votes = selectedVotes;
+
+    showScreen("voteResultScreen");
+
 }
 
+
+// بدء تخمين الجاسوس
 function startSpyGuess(){
 
-  document.getElementById("guessPlayer").textContent =
-    players[spyIndex];
+    const container =
+        document.getElementById("animalOptions");
 
-  document.getElementById("guessResult").innerHTML = "";
+    container.innerHTML = "";
 
-  createAnimalOptions();
 
-  showScreen("guessScreen");
-}
+    let options = [currentAnimal];
 
-function createAnimalOptions(){
 
-  const container =
-    document.getElementById("animalOptions");
+    while(options.length < 4){
 
-  container.innerHTML = "";
+        const randomAnimal =
+            animals[Math.floor(Math.random()*animals.length)].name;
 
-  let options = [currentAnimal];
+        if(!options.includes(randomAnimal)){
 
-  let others = animals.filter(a=>a !== currentAnimal);
+            options.push(randomAnimal);
 
-  while(options.length < 4){
-
-    let animal =
-      others[Math.floor(Math.random()*others.length)];
-
-    if(!options.includes(animal)){
-      options.push(animal);
+        }
     }
-  }
 
-  options.sort(()=>Math.random()-0.5);
 
-  options.forEach(animal=>{
+    options.sort(()=>Math.random()-.5);
 
-    const btn = document.createElement("button");
 
-    btn.className = "option";
+    options.forEach(animalName=>{
 
-    btn.textContent = animal;
+        const animal =
+            animals.find(a=>a.name === animalName);
 
-    btn.onclick = ()=>guessAnimal(animal,btn);
+        const button =
+            document.createElement("button");
 
-    container.appendChild(btn);
-  });
+        button.className = "animal-option";
+
+        button.innerHTML = `
+            ${animal.emoji}
+            <br>
+            ${animal.name}
+        `;
+
+        button.onclick = function(){
+
+            guessAnimal(button,animalName);
+
+        };
+
+        container.appendChild(button);
+
+    });
+
+
+    showScreen("guessScreen");
+
 }
 
-function guessAnimal(answer,button){
 
-  document.querySelectorAll(".option").forEach(b=>{
-    b.disabled = true;
-  });
+// تخمين الحيوان
+function guessAnimal(button,guess){
 
-  if(answer === currentAnimal){
+    const buttons =
+        document.querySelectorAll(".animal-option");
 
-    button.classList.add("correct");
+    buttons.forEach(btn=>{
+        btn.disabled = true;
+    });
 
-    document.getElementById("guessResult").innerHTML = `
-      <h2 style="color:#24a148;margin-top:25px">
-        صح عليك! ✅
-      </h2>
-      <button class="big-btn green" onclick="showScores()">
-        عرض النقاط
-      </button>
-    `;
 
-    scores[players[spyIndex]] += 200;
+    const actualAnimal =
+        animals.find(a=>a.name === currentAnimal);
 
-    players.forEach((name,index)=>{
 
-      if(index === spyIndex) return;
+    if(guess === currentAnimal){
 
-      if(selectedVotes[index] === spyIndex){
-        scores[name] += 100;
-      }
+        button.classList.add("correct");
+
+        button.innerHTML += `
+            <br>صح عليك! ✅
+        `;
+
+
+        // الجاسوس يأخذ 200 إذا عرف الحيوان
+        scores[players[spyIndex]] += 200;
+
+
+        alert("صح عليك! الجاسوس عرف الحيوان 🕵️");
+
+
+    }else{
+
+        button.classList.add("wrong");
+
+
+        buttons.forEach(btn=>{
+
+            if(btn.textContent.includes(actualAnimal.name)){
+
+                btn.classList.add("correct");
+
+            }
+
+        });
+
+
+        alert(
+            "خطأ ❌\nالحيوان الصحيح هو: "
+            + actualAnimal.name
+        );
+
+    }
+
+
+    // كل شخص صوت على الجاسوس يأخذ 100
+    players.forEach(player=>{
+
+        if(selectedVotes[player] === players[spyIndex]){
+
+            scores[player] += 100;
+
+        }
 
     });
 
-  }else{
 
-    button.classList.add("wrong");
+    setTimeout(()=>{
 
-    document.querySelectorAll(".option").forEach(b=>{
+        showScores();
 
-      if(b.textContent === currentAnimal){
-        b.classList.add("correct");
-      }
+    },700);
 
-    });
-
-    document.getElementById("guessResult").innerHTML = `
-      <h2 style="color:#d92727;margin-top:25px">
-        غلط ❌
-      </h2>
-
-      <p class="subtitle">
-        الحيوان الصحيح هو:
-        <b>${currentAnimal}</b>
-      </p>
-
-      <button class="big-btn blue" onclick="showScores()">
-        عرض النقاط
-      </button>
-    `;
-
-    players.forEach((name,index)=>{
-
-      if(index === spyIndex) return;
-
-      if(selectedVotes[index] === spyIndex){
-        scores[name] += 100;
-      }
-
-    });
-  }
 }
 
+
+// عرض النقاط
 function showScores(){
 
-  const list =
-    document.getElementById("scoreList");
+    const container =
+        document.getElementById("scoresList");
 
-  list.innerHTML = "";
+    container.innerHTML = "";
 
-  players.forEach(name=>{
 
-    const row = document.createElement("div");
+    const sorted =
+        [...players].sort(
+            (a,b)=>scores[b]-scores[a]
+        );
 
-    row.className = "score-row";
 
-    row.innerHTML = `
-      <span>${name}</span>
-      <span class="points">${scores[name]} نقطة</span>
-    `;
+    sorted.forEach(player=>{
 
-    list.appendChild(row);
-  });
+        const item =
+            document.createElement("div");
 
-  showScreen("scoreScreen");
+        item.className = "score-item";
+
+        item.innerHTML = `
+            <span>
+                ${escapeHTML(player)}
+            </span>
+
+            <span class="score">
+                ${scores[player]} نقطة
+            </span>
+        `;
+
+        container.appendChild(item);
+
+    });
+
+
+    showScreen("scoresScreen");
+
 }
 
+
+// جولة جديدة
 function newRound(){
 
-  startRound();
+    startRound();
+
 }
 
-function showHomeConfirm(){
 
-  document.getElementById("homeModal")
-    .classList.add("show");
+// فتح نافذة البيت
+function openHomeModal(){
+
+    document
+        .getElementById("homeModal")
+        .classList.add("active");
+
 }
 
-function closeHomeConfirm(){
 
-  document.getElementById("homeModal")
-    .classList.remove("show");
+// إغلاق نافذة البيت
+function closeHomeModal(){
+
+    document
+        .getElementById("homeModal")
+        .classList.remove("active");
+
 }
 
-function goHome(){
 
-  closeHomeConfirm();
+// تأكيد الرجوع للصفحة الأولى
+function confirmHome(){
 
-  showScreen("homeScreen");
+    // إغلاق النافذة
+    closeHomeModal();
+
+
+    // تصفير الجولة الحالية
+    currentPlayerIndex = 0;
+    spyIndex = -1;
+
+    currentAnimal = "";
+    previousAnimal = "";
+
+    votes = {};
+    selectedVotes = {};
+
+
+    /*
+       الأهم هنا:
+       نرجع مباشرة لصفحة أسماء اللاعبين
+       وليس صفحة اللعبة الحالية.
+    */
+
+    showScreen("playersScreen");
+
+    renderPlayers();
+
 }
+
+
+// حماية النصوص
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttribute(text){
+
+    return String(text)
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'");
+
+}
+
+
+// السماح بالضغط Enter لإضافة لاعب
+document
+    .getElementById("playerInput")
+    .addEventListener("keydown",function(e){
+
+        if(e.key === "Enter"){
+
+            addPlayer();
+
+        }
+
+    });
 
 </script>
 
